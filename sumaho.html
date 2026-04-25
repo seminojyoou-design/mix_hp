@@ -633,6 +633,7 @@
   .gallery-item {
     background: var(--wood);
   }
+  .mobile-only-br { display: none; }
   .gallery-item .ph {
     aspect-ratio: 4/5;
     overflow: hidden;
@@ -718,34 +719,28 @@
   .access .map-wrap {
     aspect-ratio: 5/4;
     background: var(--night);
-    background-image:
-      linear-gradient(135deg, transparent 0 49.6%, rgba(245,239,228,.18) 49.6% 50.4%, transparent 50.4% 100%),
-      linear-gradient(45deg, transparent 0 49.6%, rgba(245,239,228,.18) 49.6% 50.4%, transparent 50.4% 100%),
-      linear-gradient(0deg, transparent 0 24.8%, rgba(245,239,228,.08) 24.8% 25.2%, transparent 25.2% 49.8%, rgba(245,239,228,.08) 49.8% 50.2%, transparent 50.2% 74.8%, rgba(245,239,228,.08) 74.8% 75.2%, transparent 75.2% 100%),
-      linear-gradient(90deg, transparent 0 24.8%, rgba(245,239,228,.08) 24.8% 25.2%, transparent 25.2% 49.8%, rgba(245,239,228,.08) 49.8% 50.2%, transparent 50.2% 74.8%, rgba(245,239,228,.08) 74.8% 75.2%, transparent 75.2% 100%);
     position: relative;
+    overflow: hidden;
   }
-  .access .map-wrap::before {
-    content: "";
-    position: absolute; left: 50%; top: 50%;
-    width: 14px; height: 14px; border-radius: 50%;
-    background: var(--amber);
-    box-shadow: 0 0 0 8px rgba(232, 168, 92, 0.22);
-    transform: translate(-50%, -50%);
-  }
-  .access .map-wrap::after {
-    content: "MIX";
-    position: absolute; left: 50%; top: 50%;
-    margin: 16px 0 0 12px;
-    font-family: var(--display-en); font-weight: 300;
-    font-size: 12px; letter-spacing: 0.3em;
-    text-transform: uppercase; color: var(--paper);
+  .access .map-wrap iframe {
+    width: 100%; height: 100%;
+    border: 0;
+    display: block;
+    filter: grayscale(0.15) contrast(0.95);
   }
   .access .info-table { border-top: 1px solid var(--ink); }
   .access .info-table .row {
     display: grid; grid-template-columns: 110px 1fr; gap: 22px;
     padding: 20px 0; border-bottom: 1px solid var(--line);
     font-size: 14px; line-height: 1.85;
+  }
+  @media (max-width: 900px) {
+    .access .info-table .row {
+      grid-template-columns: 1fr;
+      gap: 6px;
+      padding: 16px 0;
+    }
+    .access .info-table .row dt { margin: 0; }
   }
   .access .info-table .row dt {
     font-family: var(--display-en); font-weight: 600; font-size: 11px;
@@ -1394,9 +1389,13 @@
       display: none;  /* est.1995 already in eyebrow */
     }
 
+    .showcase { padding-top: 60px; padding-bottom: 60px; }
     .showcase h2 { font-size: 22px; line-height: 1.6; }
-    .showcase .caption { flex-wrap: wrap; gap: 12px 20px; font-size: 10px; }
-    .showcase .caption span { flex: 1 0 45%; }
+    .mobile-only-br { display: inline; }
+    .showcase .caption { display: none; }
+    /* Hide hero phone CTA + footer-line phone on mobile (clashes with header) */
+    .hero .hero-cta a[href^="tel:"] { display: none !important; }
+    .hero .footer-line { display: none !important; }
     .concept { text-align: center; }
     .concept .eyebrow { justify-content: center; }
     .concept .head { grid-template-columns: 1fr; gap: 18px; }
@@ -1461,8 +1460,10 @@
     .menu-extra p { font-size: 12.5px; line-height: 1.95; max-width: 28em; margin: 0 auto; letter-spacing: 0.04em; }
     .gallery .head { flex-direction: column; align-items: center; gap: 12px; text-align: center; }
     .gallery h2 { font-size: 24px; }
-    .gallery-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
+    .gallery-grid { grid-template-columns: 1fr; gap: 22px; }
     .gallery-item { min-width: 0; }
+    .gallery-item:nth-child(n+4) { display: none; }
+    .gallery-item .ph { aspect-ratio: 4/5; }
     .gallery-item .meta {
       padding: 12px 8px 18px;
       flex-direction: column;
@@ -1489,6 +1490,17 @@
   @media (min-width: 901px) {
     .m-header, .m-menu, .m-bottom-cta, .m-hero-brand { display: none !important; }
   }
+
+  /* === Defensive: hide any phone link inside the mobile top header === */
+  @media (max-width: 900px) {
+    .m-header a[href^="tel:"],
+    .m-header .tel,
+    .m-header .m-tel { display: none !important; }
+    /* also hide any phone bleeding into the hero copy or footer-line */
+    .hero .copy { display: none !important; }
+    .hero .footer-line { display: none !important; }
+    .hero .hero-cta a[href^="tel:"] { display: none !important; }
+  }
 </style>
 <script src="https://unpkg.com/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 </head>
@@ -1514,7 +1526,6 @@
   <div class="info">
     open · close<br>
     9:00 — 19:00 / 月曜定休
-    <a href="tel:0120383991" class="tel">0120 — 38 — 3991</a>
   </div>
 </div>
 
@@ -1547,7 +1558,6 @@
       <b>open · close</b>
       9:00 — 19:00<br>
       毎週月曜定休
-      <a href="tel:0120383991" class="tel">0120-38-3991</a>
     </div>
 
     <a href="#cta" class="reserve">reserve</a>
@@ -1648,7 +1658,7 @@
     <!-- ===== SHOWCASE / INTERIOR ===== -->
     <section class="showcase" id="interior">
       <div class="eyebrow fade"><span class="num">02</span>space</div>
-      <h2 class="fade">ダークウッドの床と、植物と、夜の灯り。</h2>
+      <h2 class="fade">ダークウッドの床と、<br class="mobile-only-br">植物と、夜の灯り。</h2>
 
       <div class="row">
         <div class="ph a fade"><img src="images/exterior-dusk.jpg" alt="MIX 外観 夕方" loading="lazy"></div>
@@ -1728,13 +1738,6 @@
       </div>
       <p class="menu-note">※&nbsp;指名料 ¥550 / すべて税込み価格 / カット料金にシャンプー・ブロー含む / 価格は髪の長さ・量により変動します</p>
 
-      <div class="menu-extra fade">
-        <div class="label">
-          成人式・婚礼の着付け
-          <small>formal · seijinshiki</small>
-        </div>
-        <p style="font-weight: 400">ヘアセット・着付け・メイクをまとめてお任せいただけます。<br>前撮り、前日リハーサルもご相談ください。<br>成人式当日は早朝より対応しております。<br><br>価格はプラン内容によりお見積もり。</p>
-      </div>
     </section>
 
     <!-- ===== GALLERY ===== -->
@@ -1824,7 +1827,14 @@
         <h2>ヤシの木が目印。<br>気軽にお立ち寄りください。</h2>
       </div>
       <div class="grid">
-        <div class="map-wrap fade" aria-hidden="true"></div>
+        <div class="map-wrap fade">
+          <iframe
+            src="https://www.google.com/maps?q=%E3%83%98%E3%82%A2%E3%83%BC%E3%82%B5%E3%83%AD%E3%83%B3%E3%83%9F%E3%83%83%E3%82%AF%E3%82%B9%20%E6%84%9B%E7%9F%A5%E7%9C%8C%E8%B1%8A%E7%94%B0%E5%B8%82%E5%B9%B3%E6%88%B8%E7%94%BA345-2&output=embed"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="MIX 地図"
+            allowfullscreen></iframe>
+        </div>
         <dl class="info-table fade">
           <div class="row"><dt>name</dt><dd>Hair Designing space MIX<br>理容室・美容室</dd></div>
           <div class="row"><dt>tel</dt><dd>0120-38-3991<br>(フリーダイヤル)</dd></div>
