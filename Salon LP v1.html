@@ -1,0 +1,1447 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>MIX — Hair Designing space</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/yakuhanjp@4.0.1/dist/css/yakuhanmp.min.css">
+<style>
+  :root {
+    /* Palette pulled from the actual photos */
+    --night:        #0c1726;   /* 夜の空 */
+    --night-deep:   #060d18;
+    --charcoal:     #1f2a32;   /* MIX看板の濃いグレー */
+    --wood:         #3a2418;   /* ダークウッド床 */
+    --wood-2:       #5a3520;
+    --amber:        #e8a85c;   /* 店内の灯り */
+    --amber-soft:   #f4d4a3;
+    --palm:         #4a5c3e;   /* ヤシの緑 */
+    --paper:        #f5efe4;   /* 暖かい白 */
+    --paper-2:      #ece4d3;
+    --ink:          #14181d;
+    --ink-2:        #3a4048;
+    --ink-3:        #6e7178;
+    --ink-4:        #a8a59d;
+    --line:         #e3dcca;
+    --line-dark:    #2a3540;
+
+    --display-en: "Josefin Sans", sans-serif;
+    --serif-en:   "Playfair Display", serif;
+    --serif-jp:   "YakuHanMP", "Shippori Mincho", serif;
+    --sans-jp:    "Zen Kaku Gothic New", sans-serif;
+    --side-w: 240px;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: var(--sans-jp);
+    font-weight: 400;
+    background: var(--paper);
+    color: var(--ink-2);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.9;
+    font-size: 15px;
+    letter-spacing: 0.04em;
+  }
+  ::selection { background: var(--amber-soft); color: var(--ink); }
+  img { display: block; max-width: 100%; }
+
+  /* ===== Layout ===== */
+  .layout {
+    display: grid;
+    grid-template-columns: var(--side-w) minmax(0, 1fr);
+  }
+
+  /* ===== Sticky Side ===== */
+  .side {
+    position: sticky; top: 0; height: 100vh;
+    background: var(--night);
+    color: var(--paper);
+    padding: 36px 28px 28px;
+    display: flex; flex-direction: column; gap: 28px;
+    z-index: 5;
+    overflow: hidden;
+  }
+  .side::before {
+    /* faint palm silhouette */
+    content: "";
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(circle at 80% 110%, rgba(232, 168, 92, 0.18), transparent 50%),
+      radial-gradient(circle at 20% -10%, rgba(232, 168, 92, 0.10), transparent 50%);
+    pointer-events: none;
+  }
+  .side > * { position: relative; z-index: 1; }
+  .side .brand {
+    line-height: 1;
+    text-decoration: none;
+  }
+  .side .brand .en {
+    font-family: var(--display-en);
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 0.24em;
+    color: var(--amber-soft);
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 22px;
+    line-height: 1.4;
+  }
+  .side .brand .lg {
+    font-family: var(--display-en);
+    font-weight: 700;
+    font-size: 78px;
+    letter-spacing: 0.04em;
+    display: block;
+    line-height: 0.9;
+    background: linear-gradient(180deg, #ffffff 0%, #f4d4a3 55%, #c98c4e 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    text-shadow:
+      0 1px 0 rgba(232,168,92,0.18),
+      0 14px 42px rgba(0,0,0,0.55);
+    filter: drop-shadow(0 4px 20px rgba(232,168,92,0.25));
+  }
+  .side .brand small {
+    display: block;
+    margin-top: 22px;
+    font-family: var(--serif-jp);
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 0.28em;
+    color: var(--paper);
+  }
+  .side nav { display: flex; flex-direction: column; gap: 14px; flex: 1; margin-top: 12px; }
+  .side nav a {
+    color: rgba(245, 239, 228, 0.7);
+    text-decoration: none;
+    font-family: var(--display-en);
+    font-weight: 500;
+    font-size: 13px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    display: flex; align-items: baseline; gap: 14px;
+    transition: color .3s ease;
+  }
+  .side nav a .num { font-size: 10px; color: rgba(245,239,228,0.4); letter-spacing: 0.1em; font-weight: 400; }
+  .side nav a:hover, .side nav a.is-active { color: var(--amber-soft); }
+  .side nav a.is-active::after {
+    content: ""; flex: 1; height: 1px; background: var(--amber-soft); margin-left: 4px; margin-bottom: 3px;
+  }
+  .side .info {
+    font-size: 13px;
+    color: rgba(245, 239, 228, 0.78);
+    letter-spacing: 0.04em;
+    line-height: 2;
+    border-top: 1px solid rgba(245, 239, 228, 0.18);
+    padding-top: 20px;
+  }
+  .side .info b {
+    display: block; color: var(--amber-soft); font-weight: 500;
+    font-family: var(--display-en); font-size: 10px; letter-spacing: 0.3em;
+    text-transform: uppercase; margin-bottom: 8px;
+  }
+  .side .tel {
+    color: var(--paper) !important;
+    font-family: var(--display-en); font-weight: 500;
+    font-size: 19px; letter-spacing: 0.06em; display: block; margin-top: 10px;
+    text-decoration: none;
+  }
+  .side .reserve {
+    display: block; text-align: center; text-decoration: none;
+    background: var(--amber); color: var(--night-deep);
+    padding: 16px 20px; font-family: var(--display-en); font-weight: 700;
+    font-size: 13px; letter-spacing: 0.3em; text-transform: uppercase;
+    border-radius: 999px; transition: all .3s;
+  }
+  .side .reserve:hover { background: var(--paper); }
+
+  /* ===== Main ===== */
+  main { min-width: 0; overflow-x: clip; background: var(--paper); }
+  section { padding: 110px 7% 110px; border-bottom: 1px solid var(--line); position: relative; }
+  section:last-child { border-bottom: 0; }
+
+  .eyebrow {
+    font-family: var(--display-en); font-weight: 500;
+    font-size: 12px; letter-spacing: 0.32em; text-transform: uppercase;
+    color: var(--ink-2);
+  }
+  .eyebrow .num { color: var(--ink); margin-right: 18px; font-weight: 600; }
+  h1, h2, h3 {
+    font-family: var(--serif-jp); font-weight: 600; color: var(--ink);
+    margin: 0; letter-spacing: 0.04em;
+  }
+
+  /* ===== Hero ===== */
+  .hero {
+    padding: 0;
+    border-bottom: 0;
+    background: var(--night);
+    color: var(--paper);
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero .copy {
+    padding: 70px 6% 70px;
+    display: flex; flex-direction: column; justify-content: space-between;
+    position: relative; z-index: 2;
+  }
+  .hero .meta {
+    display: flex; justify-content: space-between; align-items: baseline;
+    font-family: var(--display-en); font-weight: 500; font-size: 12px;
+    letter-spacing: 0.26em; color: rgba(245,239,228,.78);
+    text-transform: uppercase;
+    border-bottom: 1px solid rgba(245,239,228,.22);
+    padding-bottom: 16px;
+  }
+  .hero .display {
+    margin-top: 48px;
+  }
+  .hero .display .row { display: block; }
+  .hero .display .a {
+    font-family: var(--serif-en);
+    font-weight: 600;
+    font-size: clamp(40px, 5.4vw, 80px);
+    letter-spacing: -0.015em;
+    line-height: 1;
+    color: var(--paper);
+  }
+  .hero .display .b {
+    font-family: var(--serif-en);
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(40px, 5.4vw, 80px);
+    line-height: 1;
+    color: var(--amber-soft);
+    letter-spacing: -0.01em;
+    display: block;
+    margin-top: 6px;
+  }
+  .hero .lead {
+    margin-top: 56px;
+    max-width: 480px;
+  }
+  .hero .lead h1 {
+    font-family: var(--serif-jp);
+    font-weight: 600;
+    color: var(--paper);
+    font-size: 24px;
+    line-height: 1.95;
+    margin-bottom: 26px;
+    letter-spacing: 0.06em;
+  }
+  .hero .lead p {
+    font-size: 15px; line-height: 2.1;
+    color: rgba(245,239,228,.85);
+    margin: 0;
+    letter-spacing: 0.04em;
+  }
+  .hero .footer-line {
+    margin-top: 56px;
+    display: flex; align-items: baseline; gap: 24px;
+    font-family: var(--display-en); font-weight: 500; font-size: 12px;
+    letter-spacing: 0.26em; color: rgba(245,239,228,.7);
+    text-transform: uppercase;
+  }
+  .hero .footer-line .dot {
+    width: 6px; height: 6px; background: var(--amber); border-radius: 50%;
+    display: inline-block;
+  }
+
+  .hero .visual {
+    position: relative;
+    overflow: hidden;
+  }
+  .hero .visual img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+  .hero .visual::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: linear-gradient(90deg, rgba(12,23,38,.55) 0%, transparent 30%, transparent 100%);
+    pointer-events: none;
+  }
+  .hero .badge {
+    position: absolute; right: 32px; top: 32px;
+    background: rgba(12, 23, 38, 0.78);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(245,239,228,.28);
+    color: var(--paper);
+    padding: 14px 22px;
+    font-family: var(--display-en);
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    border-radius: 999px;
+    z-index: 2;
+  }
+  .hero .badge b { color: var(--amber-soft); font-weight: 700; margin-right: 6px; }
+
+  /* ===== Concept ===== */
+  .concept .head {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 70px;
+    margin-top: 36px;
+    align-items: end;
+  }
+  .concept .head .tag {
+    font-family: var(--serif-en);
+    font-style: italic;
+    font-weight: 600;
+    font-size: clamp(40px, 4.6vw, 68px);
+    line-height: 1.15;
+    color: var(--ink);
+    letter-spacing: -0.005em;
+  }
+  .concept .head .tag em {
+    font-family: var(--serif-en);
+    font-style: italic;
+    font-weight: 500;
+    color: var(--wood);
+    display: block;
+    padding-left: 1.2em;
+    margin-top: 0.1em;
+  }
+  .concept .head h2 {
+    font-size: 30px;
+    line-height: 1.95;
+    font-weight: 600;
+  }
+  .concept .head h2 b {
+    color: var(--wood);
+    font-weight: 500;
+    border-bottom: 2px solid var(--amber);
+    padding-bottom: 2px;
+  }
+  .concept-photos {
+    margin-top: 80px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+  }
+  .concept-photos .ph {
+    aspect-ratio: 4/5;
+    overflow: hidden;
+    background: var(--paper-2);
+  }
+  .concept-photos .ph img { width:100%; height:100%; object-fit: cover; }
+  .concept-photos .ph.tall { grid-row: span 2; aspect-ratio: 4/5.6; }
+  .concept .pillars {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    margin-top: 90px;
+    border-top: 1px solid var(--ink);
+    padding-top: 50px;
+  }
+  .concept .pillar .num {
+    font-family: var(--display-en);
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.28em;
+    color: var(--wood);
+    margin-bottom: 18px;
+    text-transform: uppercase;
+  }
+  .concept .pillar h3 { font-size: 21px; line-height: 1.7; margin-bottom: 16px; font-weight: 600; }
+  .concept .pillar p { font-size: 14px; line-height: 2; color: var(--ink-2); margin: 0; }
+
+  /* ===== Showcase strip (interior) ===== */
+  .showcase {
+    background: var(--night);
+    color: var(--paper);
+    padding: 130px 7%;
+    border-bottom: 0;
+  }
+  .showcase .eyebrow { color: rgba(245,239,228,.5); }
+  .showcase .eyebrow .num { color: var(--amber-soft); }
+  .showcase h2 {
+    color: var(--paper);
+    font-size: clamp(22px, 2.4vw, 32px);
+    line-height: 1.5;
+    margin: 30px 0 0;
+    font-weight: 600;
+    max-width: none;
+    white-space: nowrap;
+  }
+  .showcase .row {
+    margin-top: 70px;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1fr;
+    grid-template-rows: 240px 320px;
+    gap: 16px;
+  }
+  .showcase .row .ph {
+    overflow: hidden;
+    background: var(--charcoal);
+  }
+  .showcase .row .ph img { width: 100%; height: 100%; object-fit: cover; }
+  .showcase .row .a { grid-column: 1; grid-row: 1 / 3; }
+  .showcase .row .b { grid-column: 2; grid-row: 1; }
+  .showcase .row .c { grid-column: 3; grid-row: 1; }
+  .showcase .row .d { grid-column: 2 / 4; grid-row: 2; }
+  .showcase .caption {
+    margin-top: 32px;
+    display: flex; justify-content: space-between; gap: 30px;
+    font-family: var(--display-en); font-weight: 500; font-size: 12px;
+    letter-spacing: 0.26em; color: rgba(245,239,228,.78); text-transform: uppercase;
+  }
+  .showcase .caption b { color: var(--amber-soft); font-weight: 700; }
+
+  /* ===== Menu ===== */
+  .menu .head {
+    display: grid; grid-template-columns: 1fr 1.6fr; gap: 60px;
+    margin-bottom: 60px; margin-top: 36px; align-items: end;
+  }
+  .menu h2 { font-size: 34px; line-height: 1.6; font-weight: 600; }
+  .menu .head p { margin: 0; color: var(--ink-2); font-size: 14px; line-height: 2; max-width: 38em; }
+  .menu-cats {
+    display: flex; gap: 8px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+  }
+  .menu-cat {
+    background: transparent;
+    border: 1px solid var(--ink);
+    color: var(--ink);
+    padding: 9px 20px;
+    font-family: var(--display-en);
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    border-radius: 999px;
+    cursor: default;
+  }
+  .menu-cat.active { background: var(--ink); color: var(--paper); }
+  .menu-list { border-top: 1px solid var(--ink); }
+  .menu-row {
+    display: grid;
+    grid-template-columns: 36px 1.4fr 2fr 110px;
+    gap: 30px;
+    padding: 26px 0;
+    border-bottom: 1px solid var(--line);
+    align-items: baseline;
+  }
+  .menu-row .num {
+    font-family: var(--display-en); font-weight: 600; font-size: 13px;
+    letter-spacing: 0.18em; color: var(--ink-3);
+  }
+  .menu-row .name {
+    font-family: var(--serif-jp); font-weight: 600; font-size: 20px;
+    color: var(--ink); letter-spacing: 0.06em;
+  }
+  .menu-row .name small {
+    display: block;
+    font-family: var(--display-en); font-weight: 500;
+    font-size: 11px; letter-spacing: 0.28em; color: var(--ink-3);
+    margin-top: 6px; text-transform: uppercase;
+  }
+  .menu-row .desc { font-size: 14px; line-height: 1.95; color: var(--ink-2); }
+  .menu-row .price {
+    text-align: right;
+    font-family: var(--display-en); font-weight: 600; font-size: 22px;
+    color: var(--ink); letter-spacing: 0.02em;
+  }
+  .menu-row .price small {
+    display: block; font-size: 10px; color: var(--ink-3);
+    letter-spacing: 0.2em; margin-top: 4px; font-weight: 500;
+  }
+  .menu-note {
+    margin-top: 30px;
+    font-size: 13px; color: var(--ink-2); letter-spacing: 0.04em;
+    line-height: 1.95;
+  }
+  .menu-extra {
+    margin-top: 70px;
+    background: var(--paper-2);
+    padding: 36px 40px;
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 36px;
+    align-items: center;
+  }
+  .menu-extra .label {
+    font-family: var(--serif-jp); font-size: 22px; font-weight: 600;
+    color: var(--wood); letter-spacing: 0.06em;
+  }
+  .menu-extra .label small {
+    display: block;
+    font-family: var(--display-en); font-weight: 500;
+    font-size: 12px; letter-spacing: 0.26em; color: var(--ink-3);
+    text-transform: uppercase; margin-top: 8px;
+  }
+  .menu-extra p { margin: 0; font-size: 14px; line-height: 2; color: var(--ink-2); }
+
+  /* ===== Gallery ===== */
+  .gallery {
+    background: var(--paper-2);
+  }
+  .gallery .head {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 50px; margin-top: 36px;
+  }
+  .gallery h2 { font-size: 34px; line-height: 1.5; font-weight: 600; }
+  .gallery .head .right {
+    font-family: var(--display-en); font-weight: 500; font-size: 12px;
+    letter-spacing: 0.26em; text-transform: uppercase; color: var(--ink-2);
+  }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px 20px;
+  }
+  .gallery-item {
+    background: var(--paper);
+  }
+  .gallery-item .ph {
+    aspect-ratio: 4/5;
+    overflow: hidden;
+    background: var(--paper-2);
+  }
+  .gallery-item .ph img { width: 100%; height: 100%; object-fit: cover; }
+  .gallery-item .meta {
+    padding: 18px 20px 22px;
+    display: flex; justify-content: space-between; align-items: baseline;
+  }
+  .gallery-item .meta .l b {
+    display: block;
+    font-family: var(--serif-jp); font-weight: 600; font-size: 16px; color: var(--ink);
+    letter-spacing: 0.06em;
+  }
+  .gallery-item .meta .l small {
+    display: block;
+    font-family: var(--display-en); font-weight: 500;
+    font-size: 11px; letter-spacing: 0.26em;
+    color: var(--ink-3); text-transform: uppercase; margin-top: 5px;
+  }
+  .gallery-item .meta .num {
+    font-family: var(--display-en); font-weight: 600; font-size: 12px;
+    letter-spacing: 0.18em; color: var(--ink-3);
+  }
+  .scroll-indicator {
+    margin-top: 16px;
+    font-family: var(--display-en); font-size: 10px;
+    letter-spacing: 0.3em; text-transform: uppercase; color: var(--ink-3);
+    display: flex; align-items: center; gap: 14px;
+  }
+  .scroll-indicator::before, .scroll-indicator::after {
+    content: ""; height: 1px; background: var(--line); flex: 1;
+  }
+
+  /* ===== Voice ===== */
+  .voice .head { margin-top: 36px; margin-bottom: 50px; }
+  .voice h2 { font-size: 34px; line-height: 1.5; font-weight: 600; }
+  .voice .grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+  }
+  .voice blockquote {
+    margin: 0;
+    background: var(--paper-2);
+    padding: 40px 40px 34px;
+    position: relative;
+    border-top: 3px solid var(--wood);
+  }
+  .voice blockquote::before {
+    content: "“";
+    position: absolute; top: 12px; left: 24px;
+    font-family: var(--serif-en); font-weight: 600; font-style: italic;
+    font-size: 72px; line-height: 1; color: var(--amber);
+  }
+  .voice blockquote p {
+    font-family: var(--serif-jp); font-size: 16px; line-height: 2.05;
+    color: var(--ink); margin: 28px 0 24px; letter-spacing: 0.06em;
+    font-weight: 500;
+  }
+  .voice blockquote footer {
+    font-family: var(--display-en); font-weight: 600; font-size: 12px;
+    letter-spacing: 0.28em; text-transform: uppercase; color: var(--ink-2);
+    border-top: 1px solid var(--line); padding-top: 16px;
+  }
+
+  /* ===== Access ===== */
+  .access {
+    background: var(--paper);
+  }
+  .access .head { margin-top: 36px; margin-bottom: 50px; }
+  .access h2 { font-size: 34px; line-height: 1.5; font-weight: 600; }
+  .access .grid {
+    display: grid; grid-template-columns: 1.4fr 1fr; gap: 50px;
+  }
+  .access .map-wrap {
+    aspect-ratio: 5/4;
+    background: var(--night);
+    background-image:
+      linear-gradient(135deg, transparent 0 49.6%, rgba(245,239,228,.18) 49.6% 50.4%, transparent 50.4% 100%),
+      linear-gradient(45deg, transparent 0 49.6%, rgba(245,239,228,.18) 49.6% 50.4%, transparent 50.4% 100%),
+      linear-gradient(0deg, transparent 0 24.8%, rgba(245,239,228,.08) 24.8% 25.2%, transparent 25.2% 49.8%, rgba(245,239,228,.08) 49.8% 50.2%, transparent 50.2% 74.8%, rgba(245,239,228,.08) 74.8% 75.2%, transparent 75.2% 100%),
+      linear-gradient(90deg, transparent 0 24.8%, rgba(245,239,228,.08) 24.8% 25.2%, transparent 25.2% 49.8%, rgba(245,239,228,.08) 49.8% 50.2%, transparent 50.2% 74.8%, rgba(245,239,228,.08) 74.8% 75.2%, transparent 75.2% 100%);
+    position: relative;
+  }
+  .access .map-wrap::before {
+    content: "";
+    position: absolute; left: 50%; top: 50%;
+    width: 14px; height: 14px; border-radius: 50%;
+    background: var(--amber);
+    box-shadow: 0 0 0 8px rgba(232, 168, 92, 0.22);
+    transform: translate(-50%, -50%);
+  }
+  .access .map-wrap::after {
+    content: "MIX";
+    position: absolute; left: 50%; top: 50%;
+    margin: 16px 0 0 12px;
+    font-family: var(--display-en); font-weight: 300;
+    font-size: 12px; letter-spacing: 0.3em;
+    text-transform: uppercase; color: var(--paper);
+  }
+  .access .info-table { border-top: 1px solid var(--ink); }
+  .access .info-table .row {
+    display: grid; grid-template-columns: 110px 1fr; gap: 22px;
+    padding: 20px 0; border-bottom: 1px solid var(--line);
+    font-size: 14px; line-height: 1.85;
+  }
+  .access .info-table .row dt {
+    font-family: var(--display-en); font-weight: 600; font-size: 11px;
+    letter-spacing: 0.28em; text-transform: uppercase; color: var(--wood);
+    margin: 4px 0 0;
+  }
+  .access .info-table .row dd { margin: 0; color: var(--ink); letter-spacing: 0.04em; font-weight: 500; }
+
+  /* ===== CTA ===== */
+  .cta {
+    background: var(--night);
+    color: var(--paper);
+    padding: 0;
+    text-align: center;
+    border-bottom: 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta .bg {
+    position: absolute; inset: 0; z-index: 0;
+  }
+  .cta .bg img {
+    width: 100%; height: 100%; object-fit: cover;
+    opacity: 0.3;
+    filter: saturate(0.85);
+  }
+  .cta .bg::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(12,23,38,.85) 0%, rgba(12,23,38,.7) 100%);
+  }
+  .cta-inner {
+    position: relative; z-index: 1;
+    padding: 130px 7%;
+  }
+  .cta .eyebrow { color: rgba(245,239,228,.5); }
+  .cta .eyebrow .num { color: var(--amber-soft); }
+  .cta h2 {
+    font-family: var(--serif-en); font-weight: 600;
+    font-size: clamp(54px, 7.5vw, 104px);
+    letter-spacing: -0.01em; line-height: 1.05;
+    color: var(--paper); margin: 28px 0 8px;
+  }
+  .cta h2 em {
+    font-family: var(--serif-en); font-style: italic; font-weight: 500;
+    color: var(--amber-soft);
+  }
+  .cta .sub {
+    font-family: var(--serif-jp); font-size: 17px; line-height: 2;
+    color: rgba(245,239,228,.92); max-width: 38ch; margin: 28px auto 50px;
+    letter-spacing: 0.06em; font-weight: 500;
+  }
+  .cta-buttons {
+    display: flex; justify-content: center; gap: 14px; flex-wrap: wrap;
+  }
+  .cta-btn {
+    text-decoration: none;
+    border: 1px solid rgba(245,239,228,.5);
+    color: var(--paper);
+    padding: 18px 38px;
+    font-family: var(--display-en); font-weight: 600;
+    font-size: 13px; letter-spacing: 0.28em; text-transform: uppercase;
+    border-radius: 999px;
+    transition: all .35s ease;
+    display: inline-flex; align-items: center; gap: 12px;
+  }
+  .cta-btn:hover {
+    background: var(--paper); color: var(--ink); border-color: var(--paper);
+  }
+  .cta-btn.solid {
+    background: var(--amber); color: var(--night-deep); border-color: var(--amber);
+  }
+  .cta-btn.solid:hover {
+    background: var(--paper); color: var(--ink); border-color: var(--paper);
+  }
+  .cta-tel {
+    margin-top: 30px;
+    display: inline-block;
+    font-family: var(--display-en); font-weight: 600;
+    font-size: 32px; letter-spacing: 0.06em;
+    color: var(--paper); text-decoration: none;
+  }
+  .cta-tel small {
+    display: block; font-size: 11px; letter-spacing: 0.3em;
+    color: rgba(245,239,228,.7); margin-bottom: 8px; text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  /* Footer */
+  footer.foot {
+    background: var(--night-deep);
+    color: rgba(245,239,228,.7);
+    padding: 32px 7%;
+    border-top: 1px solid rgba(245,239,228,.08);
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: var(--display-en); font-weight: 500;
+    font-size: 12px; letter-spacing: 0.26em; text-transform: uppercase;
+    flex-wrap: wrap; gap: 20px;
+  }
+
+  /* Fade-in */
+  .fade { opacity: 0; transform: translateY(20px);
+    transition: opacity 1.1s cubic-bezier(0.215, 0.61, 0.355, 1), transform 1.1s cubic-bezier(0.215, 0.61, 0.355, 1); }
+  .fade.is-in { opacity: 1; transform: none; }
+
+  /* ===== AI Review FAB + Modal ===== */
+  .ai-fab {
+    position: fixed; right: 28px; bottom: 28px;
+    z-index: 50;
+    background: var(--night);
+    color: var(--paper);
+    border: 1px solid rgba(245,239,228,.2);
+    padding: 14px 22px 14px 18px;
+    border-radius: 999px;
+    cursor: pointer;
+    font-family: var(--sans-jp);
+    font-weight: 500;
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    box-shadow: 0 12px 32px rgba(12,23,38,.35), 0 2px 6px rgba(12,23,38,.2);
+    display: inline-flex; align-items: center; gap: 10px;
+    transition: all .25s ease;
+  }
+  .ai-fab:hover { background: var(--ink); transform: translateY(-2px); box-shadow: 0 18px 40px rgba(12,23,38,.45); }
+  .ai-fab .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--amber);
+    box-shadow: 0 0 0 0 rgba(232,168,92,.6);
+    animation: aiPulse 1.8s ease-out infinite;
+  }
+  @keyframes aiPulse {
+    0%   { box-shadow: 0 0 0 0 rgba(232,168,92,.6); }
+    70%  { box-shadow: 0 0 0 10px rgba(232,168,92,0); }
+    100% { box-shadow: 0 0 0 0 rgba(232,168,92,0); }
+  }
+
+  .ai-modal {
+    position: fixed; inset: 0;
+    z-index: 100;
+    background: rgba(6, 13, 24, 0.72);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    display: none;
+    align-items: center; justify-content: center;
+    padding: 5vh 4vw;
+    opacity: 0;
+    transition: opacity .3s ease;
+  }
+  .ai-modal.is-open { display: flex; opacity: 1; }
+  .ai-sheet {
+    background: var(--paper);
+    width: min(720px, 100%);
+    max-height: 90vh;
+    overflow: auto;
+    border-radius: 4px;
+    box-shadow: 0 30px 80px rgba(6,13,24,.5);
+    position: relative;
+    display: flex; flex-direction: column;
+  }
+  .ai-sheet header {
+    padding: 28px 36px 22px;
+    border-bottom: 1px solid var(--line);
+    display: flex; justify-content: space-between; align-items: center;
+    background: var(--night);
+    color: var(--paper);
+    position: sticky; top: 0; z-index: 1;
+  }
+  .ai-sheet .h-title {
+    font-family: var(--serif-en); font-style: italic;
+    font-weight: 600; font-size: 24px; letter-spacing: 0.01em;
+    color: var(--paper);
+    display: flex; align-items: baseline; gap: 12px;
+  }
+  .ai-sheet .h-title em {
+    font-family: var(--display-en); font-style: normal;
+    font-weight: 600; font-size: 11px; letter-spacing: 0.3em;
+    text-transform: uppercase; color: var(--amber-soft);
+  }
+  .ai-sheet .close {
+    background: transparent; border: 1px solid rgba(245,239,228,.3);
+    color: var(--paper); width: 36px; height: 36px;
+    border-radius: 50%; cursor: pointer;
+    font-size: 18px; line-height: 1;
+    display: inline-flex; align-items: center; justify-content: center;
+    transition: all .2s;
+  }
+  .ai-sheet .close:hover { background: var(--paper); color: var(--ink); }
+
+  .ai-body { padding: 32px 36px 36px; }
+  .ai-loading {
+    display: flex; align-items: center; gap: 14px;
+    color: var(--ink-2);
+    font-size: 14px;
+    padding: 20px 0;
+  }
+  .ai-loading .spin {
+    width: 18px; height: 18px;
+    border: 2px solid var(--line);
+    border-top-color: var(--wood);
+    border-radius: 50%;
+    animation: aiSpin .8s linear infinite;
+  }
+  @keyframes aiSpin { to { transform: rotate(360deg); } }
+
+  .ai-result {
+    font-family: var(--sans-jp);
+    font-size: 14.5px;
+    line-height: 1.95;
+    color: var(--ink);
+    letter-spacing: 0.04em;
+    white-space: pre-wrap;
+  }
+  .ai-result h3 {
+    font-family: var(--serif-jp);
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--wood);
+    margin: 22px 0 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--line);
+    letter-spacing: 0.04em;
+  }
+  .ai-result h3:first-child { margin-top: 0; }
+  .ai-result strong { color: var(--ink); font-weight: 700; }
+  .ai-result ul { margin: 6px 0 14px; padding-left: 1.3em; }
+  .ai-result li { margin: 4px 0; }
+  .ai-score {
+    display: flex; align-items: baseline; gap: 14px;
+    background: var(--paper-2);
+    padding: 18px 22px;
+    margin-bottom: 22px;
+    border-left: 3px solid var(--amber);
+  }
+  .ai-score .num {
+    font-family: var(--serif-en); font-style: italic;
+    font-weight: 600; font-size: 44px; line-height: 1;
+    color: var(--wood);
+  }
+  .ai-score .num small { font-size: 18px; color: var(--ink-3); margin-left: 4px; }
+  .ai-score .lbl {
+    font-family: var(--display-en); font-weight: 600;
+    font-size: 11px; letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--ink-2);
+  }
+  .ai-error {
+    background: #fbeae6;
+    border-left: 3px solid #c44a3a;
+    padding: 14px 18px;
+    color: #863225;
+    font-size: 13px;
+    line-height: 1.7;
+  }
+  .ai-actions {
+    margin-top: 24px;
+    display: flex; gap: 10px; justify-content: flex-end;
+  }
+  .ai-actions button {
+    background: transparent;
+    border: 1px solid var(--ink);
+    color: var(--ink);
+    padding: 10px 18px;
+    font-family: var(--display-en);
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .ai-actions button:hover { background: var(--ink); color: var(--paper); }
+  .ai-actions button.primary { background: var(--ink); color: var(--paper); }
+  .ai-actions button.primary:hover { background: var(--wood); border-color: var(--wood); }
+
+  @media (max-width: 900px) {
+    .ai-fab { right: 16px; bottom: 16px; padding: 12px 18px 12px 14px; font-size: 12px; }
+    .ai-sheet header { padding: 22px 22px 18px; }
+    .ai-sheet .h-title { font-size: 18px; }
+    .ai-body { padding: 22px 22px 28px; }
+  }
+
+  /* ===== Mobile ===== */
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+    .side {
+      position: static; height: auto;
+      padding: 18px 22px;
+      flex-direction: row; align-items: center; justify-content: space-between;
+      gap: 14px; flex-wrap: wrap;
+    }
+    .side .brand .lg { font-size: 42px; letter-spacing: 0.06em; }
+    .side .brand .en { font-size: 11px; margin-bottom: 10px; }
+    .side .brand small { display: none; }
+    .side nav { flex-direction: row; flex-wrap: wrap; gap: 12px; flex: 1 0 100%; order: 3; }
+    .side nav a .num { display: none; }
+    .side nav a.is-active::after { display: none; }
+    .side .info { display: none; }
+    .side .reserve { padding: 10px 18px; font-size: 10px; }
+    section { padding: 70px 6% 70px; }
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero .copy { padding: 60px 6% 60px; }
+    .hero .visual { aspect-ratio: 4/5; }
+    .hero .badge { right: 18px; top: 18px; padding: 10px 16px; font-size: 9px; }
+    .concept .head { grid-template-columns: 1fr; gap: 24px; }
+    .concept-photos { grid-template-columns: 1fr 1fr; }
+    .concept-photos .ph.tall { grid-row: auto; aspect-ratio: 4/5; }
+    .concept .pillars { grid-template-columns: 1fr; gap: 30px; }
+    .showcase .row { grid-template-columns: 1fr 1fr; grid-template-rows: 200px 200px 200px; }
+    .showcase .row .a { grid-column: 1 / 3; grid-row: 1; }
+    .showcase .row .b { grid-column: 1; grid-row: 2; }
+    .showcase .row .c { grid-column: 2; grid-row: 2; }
+    .showcase .row .d { grid-column: 1 / 3; grid-row: 3; }
+    .menu .head { grid-template-columns: 1fr; gap: 16px; }
+    .menu-row { grid-template-columns: 28px 1fr 110px; gap: 14px; padding: 22px 0; }
+    .menu-row .desc { display: none; }
+    .menu-extra { grid-template-columns: 1fr; padding: 28px 24px; gap: 18px; }
+    .gallery .head { flex-direction: column; align-items: flex-start; gap: 16px; }
+    .gallery-grid { grid-template-columns: 1fr 1fr; gap: 20px; }
+    .voice .grid { grid-template-columns: 1fr; gap: 18px; }
+    .access .grid { grid-template-columns: 1fr; gap: 30px; }
+    .cta-inner { padding: 80px 6%; }
+    .cta-tel { font-size: 22px; }
+    footer.foot { flex-direction: column; align-items: flex-start; padding: 26px 6%; }
+  }
+</style>
+</head>
+<body>
+
+<div class="layout">
+
+  <!-- ============ Sticky Side ============ -->
+  <aside class="side">
+    <a href="#top" class="brand">
+      <span class="en">Hair Designing space</span>
+      <span class="lg">MIX</span>
+      <small>理容室・美容室</small>
+    </a>
+
+    <nav>
+      <a href="#concept" data-section="concept"><span class="num">01</span>concept</a>
+      <a href="#interior" data-section="interior"><span class="num">02</span>space</a>
+      <a href="#menu" data-section="menu"><span class="num">03</span>menu</a>
+      <a href="#gallery" data-section="gallery"><span class="num">04</span>style</a>
+      <a href="#voice" data-section="voice"><span class="num">05</span>voice</a>
+      <a href="#access" data-section="access"><span class="num">06</span>access</a>
+    </nav>
+
+    <div class="info">
+      <b>open · close</b>
+      9:00 — 19:00<br>
+      毎週月曜定休
+      <a href="tel:0120383991" class="tel">0120-38-3991</a>
+    </div>
+
+    <a href="#cta" class="reserve">reserve</a>
+  </aside>
+
+  <!-- ============ Main ============ -->
+  <main id="top">
+
+    <!-- ===== HERO ===== -->
+    <section class="hero">
+      <div class="copy">
+        <div class="meta fade">
+          <span>Hair Designing space</span>
+          <span>est. 1995 · 理容 / 美容</span>
+        </div>
+
+        <div>
+          <div class="display fade">
+            <span class="row a">your hair,</span>
+            <span class="row b">your everyday.</span>
+          </div>
+          <div class="lead fade">
+            <h1>髪を、整える。<br>暮らしを、すこし軽くする。</h1>
+            <p>地域の方に長く愛されてきた、家族のような美容室。&nbsp;理容も美容も、成人式の着付けも。&nbsp;ヤシの木の下、温かな灯りの店内でお待ちしています。</p>
+          </div>
+        </div>
+
+        <div class="footer-line fade">
+          <span class="dot"></span>
+          <span>open daily · 9–19</span>
+          <span>0120-38-3991</span>
+        </div>
+      </div>
+      <div class="visual">
+        <span class="badge fade"><b>est.</b> 1995</span>
+        <img src="images/exterior-night.jpg" alt="MIX 外観 · 夜のヤシの木と店内の温かな灯り" loading="eager">
+      </div>
+    </section>
+
+    <!-- ===== CONCEPT ===== -->
+    <section class="concept" id="concept">
+      <div class="eyebrow fade"><span class="num">01</span>concept</div>
+      <div class="head fade">
+        <div class="tag">a place,<em>to&nbsp;relax.</em></div>
+        <h2>
+          ふらっと立ち寄れる、<b>近所のサロン</b>。<br>
+          家族3世代で通えるあたたかさを、<br>
+          30年、ずっと大切にしてきました。
+        </h2>
+      </div>
+
+      <div class="concept-photos">
+        <div class="ph tall fade"><img src="images/lounge-1.jpg" alt="MIX ラウンジ" loading="lazy"></div>
+        <div class="ph fade"><img src="images/exterior-day.jpg" alt="MIX 外観 昼" loading="lazy"></div>
+        <div class="ph fade"><img src="images/lounge-2.jpg" alt="MIX 待合スペース" loading="lazy"></div>
+      </div>
+
+      <div class="pillars">
+        <div class="pillar fade">
+          <div class="num">01 — care</div>
+          <h3>理容も、美容も。<br>家族みんなで。</h3>
+          <p>カット・カラー・パーマはもちろん、お父さんのシェービングから、お子さまのはじめての散髪まで。&nbsp;一店舗ですべて完結します。</p>
+        </div>
+        <div class="pillar fade">
+          <div class="num">02 — time</div>
+          <h3>急かさない、<br>会話のあるサロン。</h3>
+          <p>長くお越しいただくお客さまが多いお店です。&nbsp;近況をうかがいながら、その日の体調や予定に合わせて仕上げていきます。</p>
+        </div>
+        <div class="pillar fade">
+          <div class="num">03 — formal</div>
+          <h3>成人式・婚礼の<br>着付けも承ります。</h3>
+          <p>ハレの日のヘアセット・着付けも、長年の経験で。&nbsp;前撮り・前日リハーサルも対応可能ですので、お早めにご相談ください。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SHOWCASE / INTERIOR ===== -->
+    <section class="showcase" id="interior">
+      <div class="eyebrow fade"><span class="num">02</span>space</div>
+      <h2 class="fade">ダークウッドの床と、植物と、夜の灯り。</h2>
+
+      <div class="row">
+        <div class="ph a fade"><img src="images/exterior-dusk.jpg" alt="MIX 外観 夕方" loading="lazy"></div>
+        <div class="ph b fade"><img src="images/shampoo-1.jpg" alt="MIX シャンプースペース" loading="lazy"></div>
+        <div class="ph c fade"><img src="images/shampoo-2.jpg" alt="MIX シャンプー台" loading="lazy"></div>
+        <div class="ph d fade"><img src="images/sign.jpg" alt="MIX 看板 · ヤシの木" loading="lazy"></div>
+      </div>
+
+      <div class="caption fade">
+        <span><b>01</b> &nbsp; exterior — dusk</span>
+        <span><b>02</b> &nbsp; shampoo space</span>
+        <span><b>03</b> &nbsp; relax chair</span>
+        <span><b>04</b> &nbsp; signboard</span>
+      </div>
+    </section>
+
+    <!-- ===== MENU ===== -->
+    <section class="menu" id="menu">
+      <div class="eyebrow fade"><span class="num">03</span>menu &amp; price</div>
+      <div class="head fade">
+        <h2>メニュー。<br>シンプルに、わかりやすく。</h2>
+        <p>カット・カラー・パーマ・着付けまで。&nbsp;すべて税込み価格です。&nbsp;ロング料金はいただいておりません。&nbsp;組み合わせは自由ですので、お気軽にご相談ください。</p>
+      </div>
+
+      <div class="menu-cats fade">
+        <span class="menu-cat active">all</span>
+        <span class="menu-cat">cut · color</span>
+        <span class="menu-cat">perm</span>
+        <span class="menu-cat">care</span>
+        <span class="menu-cat">formal</span>
+      </div>
+
+      <div class="menu-list">
+        <div class="menu-row fade">
+          <div class="num">01</div>
+          <div class="name">カット<small>cut</small></div>
+          <div class="desc">カウンセリング・シャンプー・カット・ブロー込み。</div>
+          <div class="price">¥4,400<small>from</small></div>
+        </div>
+        <div class="menu-row fade">
+          <div class="num">02</div>
+          <div class="name">カット ＋ カラー<small>cut + color</small></div>
+          <div class="desc">トレンドカラーもグレイカラーも。&nbsp;一番人気のセットです。</div>
+          <div class="price">¥9,900<small>from</small></div>
+        </div>
+        <div class="menu-row fade">
+          <div class="num">03</div>
+          <div class="name">パーマ<small>perm</small></div>
+          <div class="desc">髪の状態に合わせて薬剤を選定。&nbsp;扱いやすい仕上がりに。</div>
+          <div class="price">¥7,700<small>from</small></div>
+        </div>
+        <div class="menu-row fade">
+          <div class="num">04</div>
+          <div class="name">縮毛矯正<small>straight</small></div>
+          <div class="desc">クセ・うねり・ボリュームのお悩みに。&nbsp;自然な仕上がりを。</div>
+          <div class="price">¥13,200<small>from</small></div>
+        </div>
+        <div class="menu-row fade">
+          <div class="num">05</div>
+          <div class="name">トリートメント<small>treatment</small></div>
+          <div class="desc">3ステップで芯から。&nbsp;単体でのご利用もどうぞ。</div>
+          <div class="price">¥3,300<small>from</small></div>
+        </div>
+        <div class="menu-row fade">
+          <div class="num">06</div>
+          <div class="name">シェービング<small>shaving</small></div>
+          <div class="desc">理容師による本格シェービング。&nbsp;眉カット込み。</div>
+          <div class="price">¥2,200<small>from</small></div>
+        </div>
+        <div class="menu-row fade">
+          <div class="num">07</div>
+          <div class="name">キッズカット<small>kids · 12yrs</small></div>
+          <div class="desc">小学生以下のお子さま。&nbsp;はじめての散髪も大歓迎。</div>
+          <div class="price">¥2,750<small>from</small></div>
+        </div>
+      </div>
+      <p class="menu-note">※&nbsp;指名料 ¥550 / すべて税込み価格 / カット料金にシャンプー・ブロー含む</p>
+
+      <div class="menu-extra fade">
+        <div class="label">
+          成人式・婚礼の着付け
+          <small>formal · seijinshiki</small>
+        </div>
+        <p>ヘアセット・着付け・メイクをまとめてお任せいただけます。&nbsp;前撮り、前日リハーサルもご相談ください。&nbsp;成人式当日は早朝より対応しております。&nbsp;価格はプラン内容によりお見積もり。</p>
+      </div>
+    </section>
+
+    <!-- ===== GALLERY ===== -->
+    <section class="gallery" id="gallery">
+      <div class="eyebrow fade"><span class="num">04</span>style</div>
+      <div class="head fade">
+        <h2>これまでの仕上がり。</h2>
+        <div class="right">all styles →</div>
+      </div>
+
+      <div class="gallery-grid">
+        <figure class="gallery-item fade">
+          <div class="ph"><img src="images/work-perm-grey.jpg" alt="グレイカラー × ニュアンスパーマ" loading="lazy"></div>
+          <div class="meta">
+            <div class="l"><b>グレイ × パーマ</b><small>perm · grey color</small></div>
+            <span class="num">01</span>
+          </div>
+        </figure>
+        <figure class="gallery-item fade">
+          <div class="ph"><img src="images/work-straight.jpg" alt="縮毛矯正 before / after" loading="lazy"></div>
+          <div class="meta">
+            <div class="l"><b>縮毛矯正</b><small>before · after</small></div>
+            <span class="num">02</span>
+          </div>
+        </figure>
+        <figure class="gallery-item fade">
+          <div class="ph"><img src="images/stylist-cut.jpg" alt="カット施術中" loading="lazy"></div>
+          <div class="meta">
+            <div class="l"><b>カット施術中</b><small>cutting</small></div>
+            <span class="num">03</span>
+          </div>
+        </figure>
+        <figure class="gallery-item fade">
+          <div class="ph"><img src="images/shampoo-2.jpg" alt="シャンプー台" loading="lazy"></div>
+          <div class="meta">
+            <div class="l"><b>シャンプー</b><small>head spa</small></div>
+            <span class="num">04</span>
+          </div>
+        </figure>
+        <figure class="gallery-item fade">
+          <div class="ph"><img src="images/lounge-1.jpg" alt="ラウンジ" loading="lazy"></div>
+          <div class="meta">
+            <div class="l"><b>待合スペース</b><small>lounge</small></div>
+            <span class="num">05</span>
+          </div>
+        </figure>
+        <figure class="gallery-item fade">
+          <div class="ph"><img src="images/exterior-full.jpg" alt="MIX 外観 全景" loading="lazy"></div>
+          <div class="meta">
+            <div class="l"><b>外観 · 全景</b><small>exterior</small></div>
+            <span class="num">06</span>
+          </div>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ===== VOICE ===== -->
+    <section class="voice" id="voice">
+      <div class="eyebrow fade"><span class="num">05</span>voice</div>
+      <div class="head fade">
+        <h2>お客様の、声。</h2>
+      </div>
+      <div class="grid">
+        <blockquote class="fade">
+          <p>母の代から30年通っています。&nbsp;どんな相談にも親身に応えてくれて、いつも安心してお任せできるお店です。&nbsp;成人式の着付けもお願いしました。</p>
+          <footer>● Y様 · 50s · cut + color</footer>
+        </blockquote>
+        <blockquote class="fade">
+          <p>くせ毛で長年悩んでいましたが、髪質に合わせた縮毛矯正をしてもらえて、毎朝のセットがとても楽になりました。&nbsp;丁寧なカウンセリングが嬉しいです。</p>
+          <footer>● M様 · 30s · straight</footer>
+        </blockquote>
+        <blockquote class="fade">
+          <p>子どもがはじめての散髪で泣いてしまった時も、優しく声をかけてくれて助かりました。&nbsp;家族3人でずっとお世話になっています。</p>
+          <footer>● S様 · 40s · family</footer>
+        </blockquote>
+        <blockquote class="fade">
+          <p>成人式の朝、早朝から着付けとヘアセットをしていただきました。&nbsp;気さくな雰囲気で緊張がほぐれて、一日中崩れず本当に助かりました。</p>
+          <footer>● K様 · 20s · seijinshiki</footer>
+        </blockquote>
+      </div>
+    </section>
+
+    <!-- ===== ACCESS ===== -->
+    <section class="access" id="access">
+      <div class="eyebrow fade"><span class="num">06</span>access</div>
+      <div class="head fade">
+        <h2>ヤシの木が目印。<br>気軽にお立ち寄りください。</h2>
+      </div>
+      <div class="grid">
+        <div class="map-wrap fade" aria-hidden="true"></div>
+        <dl class="info-table fade">
+          <div class="row"><dt>name</dt><dd>Hair Designing space MIX<br>理容室・美容室</dd></div>
+          <div class="row"><dt>tel</dt><dd>0120-38-3991<br>(フリーダイヤル)</dd></div>
+          <div class="row"><dt>open</dt><dd>9:00 — 19:00 (last 18:00)</dd></div>
+          <div class="row"><dt>close</dt><dd>毎週月曜日</dd></div>
+          <div class="row"><dt>service</dt><dd>カット / カラー / パーマ / 縮毛矯正 / トリートメント / シェービング / 着付け</dd></div>
+          <div class="row"><dt>parking</dt><dd>店舗前 駐車場あり</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ===== CTA ===== -->
+    <section class="cta" id="cta">
+      <div class="bg"><img src="images/exterior-night.jpg" alt=""></div>
+      <div class="cta-inner">
+        <div class="eyebrow fade"><span class="num">07</span>reservation</div>
+        <h2 class="fade">see you<br><em>at MIX.</em></h2>
+        <p class="sub fade">はじめての方も、お久しぶりの方も。<br>お電話一本でかんたんにご予約いただけます。</p>
+        <div class="cta-buttons fade">
+          <a href="tel:0120383991" class="cta-btn solid">tel · reserve</a>
+          <a href="#access" class="cta-btn">access</a>
+        </div>
+        <a href="tel:0120383991" class="cta-tel fade">
+          <small>free dial</small>
+          0120 — 38 — 3991
+        </a>
+      </div>
+    </section>
+
+    <footer class="foot">
+      <div>Hair Designing space MIX — since 1995</div>
+      <div>© 2026 MIX</div>
+    </footer>
+
+  </main>
+</div>
+
+<!-- ============ AI Review FAB & Modal ============ -->
+<button class="ai-fab" id="aiFab" aria-label="Claudeに評価してもらう">
+  <span class="dot"></span>
+  Claudeに評価してもらう
+</button>
+
+<div class="ai-modal" id="aiModal" role="dialog" aria-modal="true" aria-labelledby="aiTitle">
+  <div class="ai-sheet">
+    <header>
+      <div class="h-title" id="aiTitle">
+        Critique
+        <em>by Claude</em>
+      </div>
+      <button class="close" id="aiClose" aria-label="閉じる">×</button>
+    </header>
+    <div class="ai-body" id="aiBody">
+      <div class="ai-loading" id="aiLoading">
+        <div class="spin"></div>
+        <span>このページをClaudeが評価しています…</span>
+      </div>
+      <div class="ai-result" id="aiResult" style="display:none"></div>
+      <div class="ai-actions" id="aiActions" style="display:none">
+        <button id="aiRetry">もう一度評価する</button>
+        <button class="primary" id="aiCloseBtn">閉じる</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Active section tracking
+  (function () {
+    var navLinks = document.querySelectorAll('.side nav a[data-section]');
+    var sections = [];
+    navLinks.forEach(function (a) {
+      var id = a.getAttribute('data-section');
+      var el = document.getElementById(id);
+      if (el) sections.push({ id: id, el: el, link: a });
+    });
+    function onScroll() {
+      var y = window.scrollY + 140;
+      var active = sections[0];
+      sections.forEach(function (s) { if (s.el.offsetTop <= y) active = s; });
+      navLinks.forEach(function (a) { a.classList.remove('is-active'); });
+      if (active) active.link.classList.add('is-active');
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+
+  // Fade-in
+  document.addEventListener('DOMContentLoaded', function () {
+    var fades = document.querySelectorAll('.fade');
+    if (!('IntersectionObserver' in window)) {
+      fades.forEach(function (f) { f.classList.add('is-in'); });
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-in');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -8% 0px' });
+    fades.forEach(function (f) { io.observe(f); });
+  });
+
+  // ===== AI Review =====
+  (function () {
+    var fab = document.getElementById('aiFab');
+    var modal = document.getElementById('aiModal');
+    var loading = document.getElementById('aiLoading');
+    var result = document.getElementById('aiResult');
+    var actions = document.getElementById('aiActions');
+    var closeBtn = document.getElementById('aiClose');
+    var closeBtn2 = document.getElementById('aiCloseBtn');
+    var retryBtn = document.getElementById('aiRetry');
+
+    function open() {
+      modal.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+      runReview();
+    }
+    function close() {
+      modal.classList.remove('is-open');
+      document.body.style.overflow = '';
+    }
+    fab.addEventListener('click', open);
+    closeBtn.addEventListener('click', close);
+    closeBtn2.addEventListener('click', close);
+    retryBtn.addEventListener('click', runReview);
+    modal.addEventListener('click', function (e) {
+      if (e.target === modal) close();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && modal.classList.contains('is-open')) close();
+    });
+
+    // Build a textual snapshot of the page for Claude to review.
+    function pageSnapshot() {
+      function pick(sel) {
+        var el = document.querySelector(sel);
+        return el ? el.innerText.replace(/\s+/g, ' ').trim() : '';
+      }
+      function pickAll(sel) {
+        return Array.from(document.querySelectorAll(sel))
+          .map(function (el) { return el.innerText.replace(/\s+/g, ' ').trim(); })
+          .filter(Boolean);
+      }
+      var lines = [];
+      lines.push('【ブランド】 Hair Designing space MIX (理容室・美容室、1995年〜)');
+      lines.push('【ヒーロー大見出し】 ' + pick('.hero .display'));
+      lines.push('【ヒーロー和文】 ' + pick('.hero .lead h1'));
+      lines.push('【リード文】 ' + pick('.hero .lead p'));
+      lines.push('【コンセプト見出し】 ' + pick('.concept .head h2'));
+      lines.push('【3つの柱】 ' + pickAll('.concept .pillar h3').join(' / '));
+      lines.push('【メニュー項目】 ' + pickAll('.menu-row .name').join(' / '));
+      lines.push('【お客様の声 (1件)】 ' + (pickAll('.voice blockquote p')[0] || ''));
+      lines.push('【主要セクション】 Hero / Concept / Space (内装) / Menu / Gallery / Voice / Access / CTA');
+      lines.push('【配色】 夜の濃紺 + 温かなアンバー + ダークウッド + 暖かい白');
+      lines.push('【写真】 実物の店舗写真 (外観・夜景・内装・施術) を多用');
+      return lines.join('\n');
+    }
+
+    function renderResult(text) {
+      // simple markdown-ish formatting
+      var html = text
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+
+      // Headings: lines like "## xxx" or "■ xxx" or "【xxx】"
+      html = html.replace(/^(?:##\s*|■\s*)(.+)$/gm, '<h3>$1</h3>');
+
+      // Bullet groups
+      html = html.replace(/(^|\n)([\-・]\s.+(?:\n[\-・]\s.+)*)/g, function (m, lead, block) {
+        var items = block.split(/\n/).map(function (l) {
+          return '<li>' + l.replace(/^[\-・]\s/, '') + '</li>';
+        }).join('');
+        return lead + '<ul>' + items + '</ul>';
+      });
+
+      // Score callout: pattern like "総合スコア: 87/100"
+      html = html.replace(/(?:総合スコア|スコア|score)[：: ]*\s*(\d{1,3})\s*\/\s*100/i,
+        function (m, n) {
+          return '<div class="ai-score"><span class="num">' + n + '<small>/100</small></span><span class="lbl">overall score</span></div>';
+        });
+
+      result.innerHTML = html;
+    }
+
+    async function runReview() {
+      loading.style.display = 'flex';
+      result.style.display = 'none';
+      actions.style.display = 'none';
+      result.innerHTML = '';
+
+      var snapshot = pageSnapshot();
+      var prompt =
+        'あなたはWebサイトのデザイン・コピー・UXを評価する一流のクリエイティブディレクターです。\n' +
+        '以下は地域密着の美容室「MIX」のランディングページの内容スナップショットです。\n' +
+        '辛口だけど建設的に、率直な日本語で評価してください。\n\n' +
+        '====== ページ内容 ======\n' + snapshot + '\n========================\n\n' +
+        '次のフォーマットで出力してください：\n' +
+        '総合スコア: ◯◯/100\n\n' +
+        '## 良い点\n- (3〜4個、具体的に)\n\n' +
+        '## 改善できる点\n- (3〜4個、具体的に)\n\n' +
+        '## 一言コメント\n(2〜3文の総評)';
+
+      try {
+        var text = await window.claude.complete(prompt);
+        loading.style.display = 'none';
+        renderResult(text);
+        result.style.display = 'block';
+        actions.style.display = 'flex';
+      } catch (err) {
+        loading.style.display = 'none';
+        result.innerHTML = '<div class="ai-error">評価の取得に失敗しました。もう一度お試しください。<br><small>' + (err && err.message ? err.message : err) + '</small></div>';
+        result.style.display = 'block';
+        actions.style.display = 'flex';
+      }
+    }
+  })();
+</script>
+
+</body>
+</html>

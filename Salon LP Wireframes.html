@@ -1,0 +1,1784 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>美容室LP — ワイヤーフレーム5案</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600&family=Kalam:wght@300;400;700&family=Shippori+Antique:wght@400&family=Zen+Kurenaido&family=Josefin+Sans:wght@100;300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #fbf8f1;
+    --paper-deep: #f3eee2;
+    --ink: #1f1d1a;
+    --ink-2: #4a4742;
+    --ink-3: #8a857c;
+    --line: #1f1d1a;
+    --line-soft: #c9c2b3;
+    --accent: #c8633b;       /* terracotta */
+    --accent-soft: #e9d8c1;  /* sand */
+    --hl: #fff7a8;           /* highlighter */
+    --green: #7a8c5a;
+    --shadow: 2px 2px 0 var(--ink);
+    --hand: "Kalam", "Caveat", "Zen Kurenaido", sans-serif;
+    --hand-jp: "Zen Kurenaido", "Kalam", sans-serif;
+    --display: "Josefin Sans", "Kalam", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: var(--hand-jp);
+    background: var(--paper);
+    color: var(--ink);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+  /* Subtle paper grain */
+  body::before {
+    content: "";
+    position: fixed; inset: 0;
+    pointer-events: none;
+    background-image:
+      radial-gradient(rgba(31,29,26,.04) 1px, transparent 1px),
+      radial-gradient(rgba(31,29,26,.03) 1px, transparent 1px);
+    background-size: 4px 4px, 11px 11px;
+    background-position: 0 0, 2px 3px;
+    z-index: 1;
+  }
+
+  /* ===== App shell ===== */
+  .app {
+    position: relative;
+    z-index: 2;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 28px 32px 120px;
+  }
+  .topbar {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    gap: 24px; flex-wrap: wrap;
+    border-bottom: 2px dashed var(--ink);
+    padding-bottom: 18px; margin-bottom: 22px;
+  }
+  .topbar h1 {
+    font-family: var(--hand);
+    font-weight: 700;
+    font-size: 30px;
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+  .topbar h1 small {
+    display: block;
+    font-family: var(--hand-jp);
+    font-weight: 400;
+    font-size: 13px;
+    color: var(--ink-3);
+    margin-top: 2px;
+  }
+  .topbar .meta {
+    font-family: var(--hand);
+    font-size: 14px;
+    color: var(--ink-2);
+    text-align: right;
+    line-height: 1.4;
+  }
+  .topbar .meta b { color: var(--accent); font-weight: 700; }
+
+  /* Tabs */
+  .tabs {
+    display: flex; gap: 10px; flex-wrap: wrap;
+    margin-bottom: 28px;
+  }
+  .tab {
+    font-family: var(--hand);
+    font-size: 16px;
+    background: var(--paper);
+    border: 2px solid var(--ink);
+    border-radius: 30px 28px 32px 26px / 26px 30px 28px 32px;
+    padding: 8px 18px 10px;
+    cursor: pointer;
+    box-shadow: var(--shadow);
+    transition: transform .12s ease;
+    color: var(--ink);
+  }
+  .tab:hover { transform: translate(-1px, -1px); }
+  .tab.is-active {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .tab .num {
+    font-family: var(--hand);
+    font-weight: 700;
+    margin-right: 6px;
+    color: var(--accent);
+  }
+  .tab.is-active .num { color: var(--hl); }
+
+  /* Frame for each wireframe */
+  .frame-meta {
+    display: flex; align-items: flex-start; gap: 18px; flex-wrap: wrap;
+    margin-bottom: 18px;
+  }
+  .frame-meta .badge {
+    font-family: var(--hand);
+    border: 2px solid var(--ink);
+    background: var(--hl);
+    padding: 4px 10px;
+    border-radius: 12px 8px 14px 6px / 8px 12px 6px 14px;
+    box-shadow: var(--shadow);
+    font-size: 14px;
+  }
+  .frame-meta h2 {
+    font-family: var(--hand);
+    font-size: 28px;
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+  .frame-meta .desc {
+    flex: 1 1 260px;
+    font-size: 14px;
+    color: var(--ink-2);
+    line-height: 1.7;
+  }
+  .frame-meta .tags {
+    display: flex; gap: 6px; flex-wrap: wrap;
+  }
+  .frame-meta .tag {
+    font-family: var(--hand);
+    font-size: 12px;
+    border: 1.5px solid var(--ink);
+    border-radius: 20px;
+    padding: 2px 8px;
+    background: var(--paper);
+  }
+
+  /* The wireframe canvas — like a sketchbook page */
+  .canvas {
+    background: var(--paper);
+    border: 2.5px solid var(--ink);
+    border-radius: 6px 4px 8px 5px / 5px 7px 4px 6px;
+    box-shadow: 6px 6px 0 var(--ink);
+    padding: 20px;
+    position: relative;
+  }
+  .canvas .pin {
+    position: absolute; top: -10px; left: 28px;
+    width: 22px; height: 22px;
+    background: var(--accent);
+    border: 2px solid var(--ink);
+    border-radius: 50%;
+    box-shadow: var(--shadow);
+  }
+  .canvas .pin.r { left: auto; right: 28px; background: var(--green); }
+
+  /* Sketch boxes */
+  .box {
+    border: 2px solid var(--ink);
+    background: var(--paper);
+    position: relative;
+    border-radius: 4px 6px 3px 5px / 5px 3px 6px 4px;
+  }
+  .box.dashed { border-style: dashed; }
+  .box.fill { background: var(--paper-deep); }
+  .box.dark { background: var(--ink); color: var(--paper); }
+  .box.accent { background: var(--accent-soft); }
+  .box.green { background: #d8dec5; }
+  .box.hatch {
+    background-image: repeating-linear-gradient(
+      135deg,
+      transparent 0 6px,
+      rgba(31,29,26,.18) 6px 7px
+    );
+    background-color: var(--paper-deep);
+  }
+  .box.hatch-soft {
+    background-image: repeating-linear-gradient(
+      135deg,
+      transparent 0 9px,
+      rgba(31,29,26,.10) 9px 10px
+    );
+  }
+  .box .lbl {
+    position: absolute; top: 8px; left: 10px;
+    font-family: var(--hand);
+    font-size: 12px;
+    color: var(--ink-2);
+    letter-spacing: 0.02em;
+    pointer-events: none;
+  }
+  .box.dark .lbl { color: var(--paper); opacity: .8; }
+  .box .lbl.tr { left: auto; right: 10px; }
+  .box .lbl.b { top: auto; bottom: 8px; }
+
+  /* Photo placeholder shorthand */
+  .photo {
+    background-image: repeating-linear-gradient(
+      45deg,
+      var(--paper-deep) 0 14px,
+      var(--paper) 14px 28px
+    );
+    border: 2px solid var(--ink);
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 4px;
+  }
+  .photo::after {
+    content: "";
+    position: absolute;
+    top: 8px; left: 8px; right: 8px; bottom: 8px;
+    border: 1px dashed rgba(31,29,26,.35);
+    pointer-events: none;
+  }
+  .photo .ph-label {
+    font-family: var(--hand);
+    font-size: 13px;
+    color: var(--ink-2);
+    background: var(--paper);
+    padding: 2px 8px;
+    border: 1.5px solid var(--ink);
+    border-radius: 16px;
+    z-index: 1;
+  }
+
+  /* Ruled text lines */
+  .lines {
+    --gap: 14px;
+    background-image: linear-gradient(
+      to bottom, transparent 0 calc(var(--gap) - 2px),
+      var(--ink-3) calc(var(--gap) - 2px) calc(var(--gap) - 1px),
+      transparent calc(var(--gap) - 1px) var(--gap)
+    );
+    background-size: 100% var(--gap);
+  }
+  .lines.short {
+    background-image: linear-gradient(
+      to bottom, transparent 0 calc(var(--gap) - 2px),
+      var(--ink-3) calc(var(--gap) - 2px) calc(var(--gap) - 1px),
+      transparent calc(var(--gap) - 1px) var(--gap)
+    );
+  }
+  /* Use clip-path to make lines look like text — varying widths */
+  .text-block {
+    display: flex; flex-direction: column; gap: 7px;
+    padding: 10px 0;
+  }
+  .text-block .ln {
+    height: 7px; background: var(--ink-3);
+    border-radius: 4px;
+  }
+  .text-block .ln.w90 { width: 90%; }
+  .text-block .ln.w80 { width: 80%; }
+  .text-block .ln.w70 { width: 70%; }
+  .text-block .ln.w60 { width: 60%; }
+  .text-block .ln.w50 { width: 50%; }
+  .text-block .ln.w40 { width: 40%; }
+  .text-block .ln.w30 { width: 30%; }
+  .text-block .ln.dark { background: var(--ink); }
+  .text-block .ln.thick { height: 11px; }
+  .text-block .ln.thin { height: 4px; }
+  .text-block.tight { gap: 5px; }
+
+  .heading {
+    font-family: var(--hand);
+    font-weight: 700;
+    color: var(--ink);
+    font-size: 22px;
+    letter-spacing: -0.01em;
+  }
+  .eyebrow {
+    font-family: var(--display);
+    font-weight: 300;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    color: var(--ink-3);
+    text-transform: uppercase;
+  }
+
+  /* Annotation arrows + notes */
+  .note {
+    position: absolute;
+    font-family: var(--hand);
+    font-size: 13px;
+    color: var(--accent);
+    line-height: 1.3;
+    z-index: 2;
+    pointer-events: none;
+    max-width: 200px;
+  }
+  .note.green { color: var(--green); }
+  .note .arrow {
+    display: inline-block;
+    font-size: 18px;
+    color: inherit;
+  }
+  .stamp {
+    display: inline-block;
+    font-family: var(--hand);
+    font-size: 11px;
+    border: 1.5px solid var(--accent);
+    color: var(--accent);
+    padding: 1px 6px;
+    border-radius: 3px;
+    transform: rotate(-2deg);
+    letter-spacing: 0.05em;
+  }
+
+  /* Layout helpers within canvas */
+  .stack { display: flex; flex-direction: column; gap: 18px; }
+  .row { display: flex; gap: 14px; }
+  .grid { display: grid; gap: 14px; }
+  .pad { padding: 18px; }
+  .pad-l { padding: 28px; }
+
+  /* ===== Wireframe specific ===== */
+  .wf { display: none; }
+  .wf.is-active { display: block; }
+
+  /* Common nav header */
+  .wf-nav {
+    height: 56px; display: flex; align-items: center; justify-content: space-between;
+    padding: 0 18px;
+    border: 2px solid var(--ink);
+    border-radius: 4px;
+    background: var(--paper);
+  }
+  .wf-nav .logo {
+    font-family: var(--hand);
+    font-weight: 700; font-size: 18px;
+  }
+  .wf-nav .nav-items {
+    display: flex; gap: 18px;
+    font-family: var(--hand);
+    color: var(--ink-2);
+    font-size: 13px;
+  }
+  .wf-nav .nav-cta {
+    font-family: var(--hand);
+    font-size: 13px;
+    border: 2px solid var(--ink);
+    background: var(--ink);
+    color: var(--paper);
+    padding: 5px 12px;
+    border-radius: 22px;
+  }
+
+  /* Section label tag */
+  .seclabel {
+    display: inline-block;
+    font-family: var(--hand);
+    font-size: 12px;
+    color: var(--paper);
+    background: var(--ink);
+    padding: 2px 10px;
+    border-radius: 0 12px 12px 0;
+    margin-left: -22px;
+    margin-bottom: 10px;
+  }
+
+  /* Wireframe 1: Classic vertical */
+  .wf1 .hero {
+    height: 360px;
+  }
+  .wf1 .concept-row {
+    grid-template-columns: 1fr 1fr;
+  }
+  .wf1 .gallery-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .wf1 .stylist-row {
+    grid-template-columns: 1fr 1.4fr;
+  }
+  .wf1 .menu-grid { grid-template-columns: 1fr 1fr; }
+  .wf1 .access-row { grid-template-columns: 1.2fr 1fr; }
+
+  /* Wireframe 2: Magazine editorial */
+  .wf2 .mag-hero { height: 380px; grid-template-columns: 0.7fr 1.6fr; }
+  .wf2 .mag-concept { grid-template-columns: 0.4fr 1fr; }
+  .wf2 .mag-gallery { grid-template-columns: 2fr 1fr 1.2fr; grid-template-rows: 200px 200px; }
+  .wf2 .mag-gallery > :nth-child(1) { grid-row: span 2; }
+  .wf2 .vertical-jp {
+    writing-mode: vertical-rl;
+    font-family: "Shippori Antique", serif;
+    font-size: 14px;
+    letter-spacing: 0.3em;
+    color: var(--ink-2);
+  }
+
+  /* Wireframe 3: Hero split + sticky side */
+  .wf3 .layout {
+    grid-template-columns: 180px minmax(0, 1fr);
+  }
+  .wf3 .side {
+    border: 2px solid var(--ink);
+    background: var(--paper-deep);
+    padding: 18px 14px;
+    height: fit-content;
+    position: relative;
+  }
+  .wf3 .hero-split { grid-template-columns: 1fr 1fr; height: 360px; }
+  .wf3 .menu-table { display: flex; flex-direction: column; gap: 0; }
+  .wf3 .menu-table .menu-row {
+    display: grid; grid-template-columns: 28px 1fr 80px;
+    gap: 14px; padding: 14px 6px;
+    border-bottom: 1.5px solid var(--line-soft);
+    align-items: center;
+  }
+
+  /* Wireframe 4: Horizontal scroll */
+  .wf4 .h-scroll {
+    display: flex; gap: 14px;
+    padding: 6px 2px 14px;
+    overflow: visible;
+    border-top: 2px dashed var(--ink);
+    border-bottom: 2px dashed var(--ink);
+  }
+  .wf4 .h-scroll .card { flex: 0 0 220px; }
+  .wf4 .scroll-hint {
+    font-family: var(--hand);
+    font-size: 13px;
+    color: var(--accent);
+    margin: 6px 4px 0;
+  }
+  .wf4 .stylist-h {
+    display: flex; gap: 14px;
+  }
+  .wf4 .stylist-h .scard { flex: 0 0 200px; }
+
+  /* Wireframe 5: Asymmetric grid */
+  .wf5 .asym-hero {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    grid-template-rows: 220px 140px;
+    gap: 14px;
+  }
+  .wf5 .asym-hero > :nth-child(1) { grid-row: span 2; }
+  .wf5 .asym-gallery {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-auto-rows: 110px;
+    gap: 10px;
+  }
+  .wf5 .asym-gallery > :nth-child(1) { grid-column: span 3; grid-row: span 2; }
+  .wf5 .asym-gallery > :nth-child(2) { grid-column: span 2; }
+  .wf5 .asym-gallery > :nth-child(3) { grid-column: span 1; grid-row: span 2; }
+  .wf5 .asym-gallery > :nth-child(4) { grid-column: span 2; }
+  .wf5 .asym-stylist { grid-template-columns: 1fr 1.3fr 1fr; }
+
+  /* Wireframe 6: Side nav x H-scroll mix */
+  .wf6 .layout { grid-template-columns: 200px minmax(0, 1fr); }
+  .wf6 .stack { min-width: 0; }
+  .wf6 .side {
+    border: 2px solid var(--ink);
+    background: var(--paper-deep);
+    padding: 18px 14px;
+    height: fit-content;
+    position: relative;
+  }
+  .wf6 .h-scroll {
+    display: flex; gap: 14px;
+    padding: 6px 2px 14px;
+    border-top: 2px dashed var(--ink);
+    border-bottom: 2px dashed var(--ink);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+  }
+  .wf6 .h-scroll .card { flex: 0 0 200px; scroll-snap-align: start; }
+  .wf6 .scroll-hint {
+    font-family: var(--hand);
+    font-size: 13px;
+    color: var(--accent);
+    margin: 6px 4px 0;
+  }
+
+  /* Comparison strip below tabs (Tweak: structure overview) */
+  .overview-strip {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    margin-bottom: 26px;
+    transition: opacity .2s;
+  }
+  .overview-strip .mini {
+    border: 2px solid var(--ink);
+    background: var(--paper);
+    border-radius: 4px;
+    padding: 8px;
+    cursor: pointer;
+    transition: transform .12s ease;
+    box-shadow: 3px 3px 0 var(--ink);
+  }
+  .overview-strip .mini:hover { transform: translate(-1px, -1px); }
+  .overview-strip .mini.is-active {
+    background: var(--ink); color: var(--paper);
+  }
+  .overview-strip .mini .mini-num {
+    font-family: var(--hand);
+    font-weight: 700;
+    color: var(--accent);
+    font-size: 13px;
+  }
+  .overview-strip .mini.is-active .mini-num { color: var(--hl); }
+  .overview-strip .mini .mini-name {
+    font-family: var(--hand);
+    font-size: 14px;
+    margin-top: 2px;
+  }
+  .overview-strip .mini .mini-thumb {
+    margin-top: 8px;
+    height: 80px;
+    background: var(--paper-deep);
+    border: 1.5px solid var(--ink);
+    border-radius: 3px;
+    display: flex; flex-direction: column;
+    overflow: hidden;
+  }
+  .overview-strip .mini.is-active .mini-thumb { background: #2a2825; border-color: var(--paper); }
+  .overview-strip .mini .mini-thumb .b {
+    background: rgba(31,29,26,.18);
+    margin: 2px;
+    border-radius: 2px;
+  }
+  .overview-strip .mini.is-active .mini-thumb .b { background: rgba(255,255,255,.25); }
+
+  /* Footnotes / legend */
+  .legend {
+    margin-top: 30px;
+    border-top: 2px dashed var(--ink);
+    padding-top: 18px;
+    display: flex; gap: 22px; flex-wrap: wrap;
+    font-family: var(--hand);
+    font-size: 13px;
+    color: var(--ink-2);
+  }
+  .legend .li { display: flex; align-items: center; gap: 8px; }
+  .legend .swatch {
+    width: 20px; height: 20px;
+    border: 1.5px solid var(--ink);
+    border-radius: 3px;
+  }
+  .legend .swatch.photo {
+    background-image: repeating-linear-gradient(
+      45deg,
+      var(--paper-deep) 0 5px,
+      var(--paper) 5px 10px
+    );
+  }
+  .legend .swatch.hatch {
+    background-image: repeating-linear-gradient(
+      135deg,
+      transparent 0 4px,
+      rgba(31,29,26,.18) 4px 5px
+    );
+    background-color: var(--paper-deep);
+  }
+  .legend .swatch.text {
+    background: var(--paper);
+    position: relative;
+  }
+  .legend .swatch.text::before {
+    content: "";
+    position: absolute; left: 3px; right: 3px; top: 6px;
+    height: 2px; background: var(--ink-3); box-shadow: 0 4px 0 var(--ink-3), 0 8px 0 var(--ink-3);
+  }
+  .legend .swatch.cta {
+    background: var(--ink);
+  }
+
+  /* Tweaks panel sits at bottom-right via starter component */
+  /* Granularity tweak class on body */
+  body.lofi .photo { opacity: 0.88; }
+  body.lofi .text-block .ln { background: var(--ink-3); }
+  body.midfi {
+    --paper: #faf7f3;
+    --paper-deep: #efe9dc;
+  }
+  body.midfi .canvas { box-shadow: 4px 4px 0 var(--ink); }
+  body.midfi .photo {
+    background-image:
+      linear-gradient(135deg, rgba(122,140,90,.25), rgba(200,99,59,.12)),
+      repeating-linear-gradient(45deg, var(--paper-deep) 0 14px, var(--paper) 14px 28px);
+  }
+  body.midfi .text-block .ln { background: var(--ink-2); }
+  body.midfi .heading { font-family: "Josefin Sans", "Kalam", sans-serif; font-weight: 300; letter-spacing: 0.02em; }
+  body.midfi .box { border-width: 1.5px; }
+
+  /* Color palette tweak */
+  body.palette-sage { --accent: #7a8c5a; --accent-soft: #d8dec5; --hl: #e8edd6; }
+  body.palette-warm { --accent: #c8633b; --accent-soft: #e9d8c1; --hl: #fff7a8; }
+  body.palette-stone { --accent: #4a4742; --accent-soft: #d9d4ca; --hl: #efe9dc; }
+
+  /* Responsive niceties */
+  @media (max-width: 900px) {
+    .app { padding: 18px 16px 80px; }
+    .topbar h1 { font-size: 24px; }
+    .overview-strip { grid-template-columns: repeat(2, 1fr); }
+    .wf1 .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    .wf2 .mag-hero, .wf2 .mag-concept { grid-template-columns: 1fr; }
+    .wf3 .layout { grid-template-columns: 1fr; }
+    .wf3 .hero-split { grid-template-columns: 1fr; height: auto; }
+    .wf5 .asym-hero { grid-template-columns: 1fr; grid-template-rows: 200px 140px 140px; }
+    .wf5 .asym-hero > :nth-child(1) { grid-row: auto; }
+    .wf6 .layout { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <div class="topbar">
+    <h1>
+      美容室LP — Wireframe Sketches
+      <small>5案の構造比較 / ナチュラル系をベースに / sketch fidelity</small>
+    </h1>
+    <div class="meta">
+      <div>project: <b>mix_LP</b></div>
+      <div>date: 2026.04.25</div>
+      <div>author: design exploration</div>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs" id="tabs">
+    <button class="tab is-active" data-target="wf1"><span class="num">01</span>Classic Vertical</button>
+    <button class="tab" data-target="wf2"><span class="num">02</span>Magazine Editorial</button>
+    <button class="tab" data-target="wf3"><span class="num">03</span>Sticky Side Nav</button>
+    <button class="tab" data-target="wf4"><span class="num">04</span>Horizontal Scroll</button>
+    <button class="tab" data-target="wf5"><span class="num">05</span>Asymmetric Grid</button>
+    <button class="tab" data-target="wf6"><span class="num">06</span>Side Nav × H-Scroll <em style="font-style:italic;color:var(--accent);font-family:var(--hand)">mix</em></button>
+  </div>
+
+  <!-- Quick overview thumbnails -->
+  <div class="overview-strip" id="overview">
+    <div class="mini is-active" data-target="wf1">
+      <div class="mini-num">01</div>
+      <div class="mini-name">Classic Vertical</div>
+      <div class="mini-thumb">
+        <div class="b" style="height:34%"></div>
+        <div class="b" style="height:14%"></div>
+        <div class="b" style="height:18%"></div>
+        <div class="b" style="height:24%"></div>
+      </div>
+    </div>
+    <div class="mini" data-target="wf2">
+      <div class="mini-num">02</div>
+      <div class="mini-name">Magazine</div>
+      <div class="mini-thumb" style="flex-direction:row;align-items:stretch">
+        <div class="b" style="width:25%;margin:2px"></div>
+        <div class="b" style="width:65%;margin:2px"></div>
+      </div>
+    </div>
+    <div class="mini" data-target="wf3">
+      <div class="mini-num">03</div>
+      <div class="mini-name">Sticky Side</div>
+      <div class="mini-thumb" style="flex-direction:row;align-items:stretch">
+        <div class="b" style="width:18%;margin:2px"></div>
+        <div style="flex:1;display:flex;flex-direction:column">
+          <div class="b" style="height:40%;margin:2px"></div>
+          <div class="b" style="height:25%;margin:2px"></div>
+          <div class="b" style="height:20%;margin:2px"></div>
+        </div>
+      </div>
+    </div>
+    <div class="mini" data-target="wf4">
+      <div class="mini-num">04</div>
+      <div class="mini-name">H-Scroll</div>
+      <div class="mini-thumb">
+        <div class="b" style="height:30%;margin:2px"></div>
+        <div style="display:flex;height:30%;margin:2px;gap:2px">
+          <div class="b" style="flex:0 0 25%"></div>
+          <div class="b" style="flex:0 0 25%"></div>
+          <div class="b" style="flex:0 0 25%"></div>
+          <div class="b" style="flex:0 0 25%"></div>
+        </div>
+        <div class="b" style="height:18%;margin:2px"></div>
+      </div>
+    </div>
+    <div class="mini" data-target="wf6">
+      <div class="mini-num">06</div>
+      <div class="mini-name">Side × H-Scroll</div>
+      <div class="mini-thumb" style="flex-direction:row;align-items:stretch">
+        <div class="b" style="width:18%;margin:2px"></div>
+        <div style="flex:1;display:flex;flex-direction:column">
+          <div class="b" style="height:35%;margin:2px"></div>
+          <div style="display:flex;height:30%;margin:2px;gap:2px">
+            <div class="b" style="flex:0 0 28%"></div>
+            <div class="b" style="flex:0 0 28%"></div>
+            <div class="b" style="flex:0 0 28%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mini" data-target="wf5">
+      <div class="mini-num">05</div>
+      <div class="mini-name">Asymmetric</div>
+      <div class="mini-thumb" style="display:grid;grid-template-columns:2fr 1fr;grid-template-rows:1fr 1fr;gap:2px;padding:2px">
+        <div class="b" style="grid-row:span 2"></div>
+        <div class="b"></div>
+        <div class="b"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== WF 1 ===================== -->
+  <section class="wf wf1 is-active" id="wf1">
+    <div class="frame-meta">
+      <div class="badge">案 01</div>
+      <div>
+        <h2>Classic Vertical — 王道縦積み</h2>
+        <div class="tags" style="margin-top:6px">
+          <span class="tag">フルスクリーン写真</span>
+          <span class="tag">左右分割</span>
+          <span class="tag">4列ギャラリー</span>
+          <span class="tag">読みやすさ◎</span>
+        </div>
+      </div>
+      <p class="desc">最も予測可能で迷わない動線。ヒーロー → コンセプト → スタイリスト → メニュー → ギャラリー → アクセス → 予約。万人向け。fleur de eLan系のウォームトーンと相性◎。</p>
+    </div>
+
+    <div class="canvas">
+      <span class="pin"></span><span class="pin r"></span>
+      <div class="stack">
+
+        <!-- nav -->
+        <div class="wf-nav">
+          <div class="logo">salon ●●</div>
+          <div class="nav-items"><span>concept</span><span>stylist</span><span>menu</span><span>gallery</span><span>access</span></div>
+          <div class="nav-cta">予約する →</div>
+        </div>
+
+        <!-- hero -->
+        <div style="position:relative">
+          <div class="box photo hero" style="height:360px">
+            <div class="ph-label">hero photo / 横長 1920×1080</div>
+            <div class="lbl">SECTION · HERO</div>
+            <div class="lbl tr b"><span class="eyebrow">scroll ↓</span></div>
+            <!-- floating headline plate -->
+            <div style="position:absolute; left:36px; bottom:36px; background:rgba(251,248,241,.92); padding:18px 22px; border:1.5px solid var(--ink); max-width:60%">
+              <div class="eyebrow">natural · warm · slow</div>
+              <div class="heading" style="margin-top:6px">髪と暮らす、ちいさな時間</div>
+              <div class="text-block tight" style="margin-top:6px">
+                <div class="ln w90 thin"></div>
+                <div class="ln w70 thin"></div>
+              </div>
+            </div>
+          </div>
+          <div class="note" style="top:-10px; right:-8px;">
+            ヒーロー1枚<br>= 第一印象の95% <span class="arrow">↘</span>
+          </div>
+        </div>
+
+        <!-- concept -->
+        <div>
+          <div class="seclabel">concept</div>
+          <div class="grid concept-row">
+            <div class="pad-l">
+              <div class="eyebrow">our concept</div>
+              <h3 class="heading" style="margin:8px 0 14px">日々をすこし、整える場所</h3>
+              <div class="text-block">
+                <div class="ln w90"></div><div class="ln w80"></div>
+                <div class="ln w90"></div><div class="ln w70"></div>
+                <div class="ln w50"></div>
+              </div>
+              <div style="margin-top:18px"><span class="stamp">read more</span></div>
+            </div>
+            <div class="box photo" style="height:300px">
+              <div class="ph-label">店内写真 / 縦長</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- stylist -->
+        <div>
+          <div class="seclabel">stylist</div>
+          <div class="grid stylist-row">
+            <div class="box photo" style="height:340px">
+              <div class="ph-label">スタイリスト / portrait</div>
+            </div>
+            <div class="pad-l">
+              <div class="eyebrow">stylist · 01</div>
+              <div class="heading" style="margin:6px 0">— Yuki Tanabe</div>
+              <div style="font-family:var(--hand); font-size:14px; color:var(--ink-3); margin-bottom:10px">director / 12 years</div>
+              <div class="text-block">
+                <div class="ln w90"></div><div class="ln w80"></div><div class="ln w70"></div>
+                <div class="ln w90"></div><div class="ln w50"></div>
+              </div>
+              <div class="row" style="margin-top:16px">
+                <div class="box dashed" style="padding:6px 10px; font-family:var(--hand); font-size:12px">他のスタイリスト →</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- menu -->
+        <div style="position:relative">
+          <div class="seclabel">menu</div>
+          <div class="grid menu-grid">
+            <div class="box pad" style="padding:18px">
+              <div style="display:flex; justify-content:space-between; align-items:baseline; border-bottom:1.5px dashed var(--line-soft); padding-bottom:8px; margin-bottom:8px">
+                <div style="font-family:var(--hand); font-size:16px">cut</div>
+                <div style="font-family:var(--hand); font-size:14px; color:var(--ink-2)">¥5,500〜</div>
+              </div>
+              <div class="text-block tight"><div class="ln w80 thin"></div><div class="ln w60 thin"></div></div>
+            </div>
+            <div class="box pad" style="padding:18px">
+              <div style="display:flex; justify-content:space-between; align-items:baseline; border-bottom:1.5px dashed var(--line-soft); padding-bottom:8px; margin-bottom:8px">
+                <div style="font-family:var(--hand); font-size:16px">cut + color</div>
+                <div style="font-family:var(--hand); font-size:14px; color:var(--ink-2)">¥12,000〜</div>
+              </div>
+              <div class="text-block tight"><div class="ln w80 thin"></div><div class="ln w60 thin"></div></div>
+            </div>
+            <div class="box pad" style="padding:18px">
+              <div style="display:flex; justify-content:space-between; align-items:baseline; border-bottom:1.5px dashed var(--line-soft); padding-bottom:8px; margin-bottom:8px">
+                <div style="font-family:var(--hand); font-size:16px">treatment</div>
+                <div style="font-family:var(--hand); font-size:14px; color:var(--ink-2)">¥3,800〜</div>
+              </div>
+              <div class="text-block tight"><div class="ln w80 thin"></div><div class="ln w60 thin"></div></div>
+            </div>
+            <div class="box pad" style="padding:18px">
+              <div style="display:flex; justify-content:space-between; align-items:baseline; border-bottom:1.5px dashed var(--line-soft); padding-bottom:8px; margin-bottom:8px">
+                <div style="font-family:var(--hand); font-size:16px">head spa</div>
+                <div style="font-family:var(--hand); font-size:14px; color:var(--ink-2)">¥4,500〜</div>
+              </div>
+              <div class="text-block tight"><div class="ln w80 thin"></div><div class="ln w60 thin"></div></div>
+            </div>
+          </div>
+          <div class="note green" style="right:-30px; top:18px">
+            <span class="arrow">←</span> 価格を<br>右寄せに揃える
+          </div>
+        </div>
+
+        <!-- gallery -->
+        <div>
+          <div class="seclabel">gallery</div>
+          <div class="grid gallery-grid">
+            <div class="box photo" style="aspect-ratio:1"><div class="ph-label">style #01</div></div>
+            <div class="box photo" style="aspect-ratio:1"><div class="ph-label">style #02</div></div>
+            <div class="box photo" style="aspect-ratio:1"><div class="ph-label">style #03</div></div>
+            <div class="box photo" style="aspect-ratio:1"><div class="ph-label">style #04</div></div>
+            <div class="box photo" style="aspect-ratio:1"><div class="ph-label">style #05</div></div>
+            <div class="box photo" style="aspect-ratio:1"><div class="ph-label">style #06</div></div>
+            <div class="box photo" style="aspect-ratio:1"><div class="ph-label">style #07</div></div>
+            <div class="box photo" style="aspect-ratio:1"><div class="ph-label">style #08</div></div>
+          </div>
+        </div>
+
+        <!-- access -->
+        <div>
+          <div class="seclabel">access</div>
+          <div class="grid access-row">
+            <div class="box hatch-soft" style="height:240px; position:relative">
+              <div class="lbl">map embed</div>
+              <div style="position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); font-family:var(--hand); color:var(--accent); font-size:18px">📍 ●●●●</div>
+            </div>
+            <div class="pad-l">
+              <div class="heading" style="margin-bottom:14px">access</div>
+              <div class="text-block tight">
+                <div class="ln w70"></div>
+                <div class="ln w90"></div>
+                <div class="ln w60"></div>
+                <div class="ln w80"></div>
+                <div class="ln w50"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- cta -->
+        <div class="box dark" style="padding:36px; text-align:center; position:relative">
+          <div class="eyebrow" style="color:var(--paper); opacity:.6">reservation</div>
+          <div class="heading" style="color:var(--paper); font-size:26px; margin-top:6px">ご予約・お問い合わせ</div>
+          <div style="display:flex; gap:12px; justify-content:center; margin-top:18px">
+            <div style="border:2px solid var(--paper); color:var(--paper); padding:8px 22px; border-radius:30px; font-family:var(--hand)">tel 03-●●●●</div>
+            <div style="background:var(--paper); color:var(--ink); padding:8px 22px; border-radius:30px; font-family:var(--hand); font-weight:700">web予約 →</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== WF 2 ===================== -->
+  <section class="wf wf2" id="wf2">
+    <div class="frame-meta">
+      <div class="badge">案 02</div>
+      <div>
+        <h2>Magazine Editorial — 雑誌風</h2>
+        <div class="tags" style="margin-top:6px">
+          <span class="tag">左カラムタイトル</span>
+          <span class="tag">縦書きアクセント</span>
+          <span class="tag">ノンブル番号</span>
+          <span class="tag">読み物寄り</span>
+        </div>
+      </div>
+      <p class="desc">「美容室というより、ひとつの作品集」風。ヒーローは小さめ、文字でじっくり世界観を伝える。La Melu系の和的エディトリアル。30代後半〜40代女性、ブランド色強い店舗向け。</p>
+    </div>
+
+    <div class="canvas">
+      <span class="pin"></span><span class="pin r"></span>
+      <div class="stack">
+
+        <!-- nav -->
+        <div class="wf-nav">
+          <div class="logo" style="font-family:'Josefin Sans'; font-weight:300; letter-spacing:0.2em">SALON · ●●</div>
+          <div class="nav-items" style="font-family:'Josefin Sans'; letter-spacing:0.15em; font-size:11px; text-transform:uppercase">
+            <span>concept</span><span>stylist</span><span>menu</span><span>journal</span><span>access</span>
+          </div>
+          <div style="font-family:'Josefin Sans'; font-size:11px; letter-spacing:0.15em; text-transform:uppercase; border-bottom:1.5px solid var(--ink); padding-bottom:2px">reserve</div>
+        </div>
+
+        <!-- masthead -->
+        <div style="display:grid; grid-template-columns:1fr auto; align-items:end; padding:24px 0 8px; border-bottom:2px solid var(--ink); position:relative">
+          <div>
+            <div class="eyebrow">issue 01 · spring 2026</div>
+            <div style="font-family:'Josefin Sans'; font-weight:100; font-size:64px; letter-spacing:0.05em; line-height:1;">SALON</div>
+          </div>
+          <div style="font-family:var(--hand); color:var(--ink-3); font-size:13px; text-align:right">
+            ヘアサロン ●●●●<br>vol. 01 — concept book
+          </div>
+          <div class="note" style="top:6px; right:30%">
+            <span class="arrow">↓</span> 雑誌の表紙のような<br>大文字タイポ
+          </div>
+        </div>
+
+        <!-- hero (compact, asymmetric) -->
+        <div class="grid mag-hero">
+          <div style="padding:14px 0 0;">
+            <div class="vertical-jp" style="height:300px">　髪と暮らす、ちいさな時間。</div>
+            <div style="font-family:var(--hand); font-size:12px; color:var(--ink-3); margin-top:14px">— editor's note</div>
+          </div>
+          <div class="box photo" style="height:380px">
+            <div class="ph-label">hero / 縦長 portrait</div>
+          </div>
+        </div>
+
+        <!-- concept (article style) -->
+        <div class="grid mag-concept" style="margin-top:14px; padding-top:24px; border-top:1.5px solid var(--line-soft)">
+          <div>
+            <div style="font-family:'Josefin Sans'; font-weight:100; font-size:38px; line-height:1;">№ 01</div>
+            <div class="eyebrow" style="margin-top:6px">concept</div>
+            <div class="heading" style="margin-top:10px; font-family:'Shippori Antique', serif; font-size:20px">日々を、整える</div>
+          </div>
+          <div style="columns:2; column-gap:32px;">
+            <div class="text-block tight">
+              <div class="ln w90"></div><div class="ln w90"></div><div class="ln w80"></div>
+              <div class="ln w90"></div><div class="ln w70"></div><div class="ln w90"></div>
+              <div class="ln w80"></div><div class="ln w60"></div>
+              <div class="ln w90"></div><div class="ln w90"></div><div class="ln w50"></div>
+              <div class="ln w90"></div><div class="ln w70"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- gallery editorial -->
+        <div style="margin-top:30px; padding-top:24px; border-top:1.5px solid var(--line-soft)">
+          <div style="display:flex; align-items:baseline; gap:14px; margin-bottom:14px">
+            <div style="font-family:'Josefin Sans'; font-weight:100; font-size:38px; line-height:1;">№ 02</div>
+            <div class="eyebrow">portfolio</div>
+          </div>
+          <div class="grid mag-gallery">
+            <div class="box photo"><div class="ph-label">cover style</div></div>
+            <div class="box photo"><div class="ph-label">style B</div></div>
+            <div class="box photo"><div class="ph-label">style C</div></div>
+            <div class="box photo"><div class="ph-label">style D</div></div>
+            <div class="box photo"><div class="ph-label">style E</div></div>
+          </div>
+          <div style="display:flex; justify-content:space-between; margin-top:10px; font-family:var(--hand); font-size:12px; color:var(--ink-3)">
+            <div>p. 02</div>
+            <div>style index 01–05</div>
+          </div>
+        </div>
+
+        <!-- stylist as profiles -->
+        <div style="margin-top:30px; padding-top:24px; border-top:1.5px solid var(--line-soft)">
+          <div style="display:flex; align-items:baseline; gap:14px; margin-bottom:14px">
+            <div style="font-family:'Josefin Sans'; font-weight:100; font-size:38px; line-height:1;">№ 03</div>
+            <div class="eyebrow">stylists</div>
+          </div>
+          <div class="grid" style="grid-template-columns:repeat(3, 1fr); gap:18px">
+            <div>
+              <div class="box photo" style="aspect-ratio:3/4"><div class="ph-label">portrait 01</div></div>
+              <div style="margin-top:10px;">
+                <div style="font-family:'Josefin Sans'; font-size:12px; letter-spacing:0.2em">DIRECTOR</div>
+                <div class="heading" style="font-size:18px; font-family:'Shippori Antique', serif">田辺 ゆき</div>
+                <div class="text-block tight" style="margin-top:6px"><div class="ln w90 thin"></div><div class="ln w70 thin"></div><div class="ln w50 thin"></div></div>
+              </div>
+            </div>
+            <div>
+              <div class="box photo" style="aspect-ratio:3/4"><div class="ph-label">portrait 02</div></div>
+              <div style="margin-top:10px;">
+                <div style="font-family:'Josefin Sans'; font-size:12px; letter-spacing:0.2em">STYLIST</div>
+                <div class="heading" style="font-size:18px; font-family:'Shippori Antique', serif">●● ●●</div>
+                <div class="text-block tight" style="margin-top:6px"><div class="ln w90 thin"></div><div class="ln w70 thin"></div><div class="ln w50 thin"></div></div>
+              </div>
+            </div>
+            <div>
+              <div class="box photo" style="aspect-ratio:3/4"><div class="ph-label">portrait 03</div></div>
+              <div style="margin-top:10px;">
+                <div style="font-family:'Josefin Sans'; font-size:12px; letter-spacing:0.2em">STYLIST</div>
+                <div class="heading" style="font-size:18px; font-family:'Shippori Antique', serif">●● ●●</div>
+                <div class="text-block tight" style="margin-top:6px"><div class="ln w90 thin"></div><div class="ln w70 thin"></div><div class="ln w50 thin"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- menu as price index -->
+        <div style="margin-top:30px; padding-top:24px; border-top:1.5px solid var(--line-soft)">
+          <div style="display:flex; align-items:baseline; gap:14px; margin-bottom:14px">
+            <div style="font-family:'Josefin Sans'; font-weight:100; font-size:38px; line-height:1;">№ 04</div>
+            <div class="eyebrow">price · index</div>
+          </div>
+          <div class="grid" style="grid-template-columns:1fr 1fr; gap:0 60px">
+            <div>
+              <div style="display:flex; justify-content:space-between; padding:12px 0; border-bottom:1.5px dotted var(--ink-3); font-family:'Shippori Antique', serif"><span>cut</span><span>¥5,500〜</span></div>
+              <div style="display:flex; justify-content:space-between; padding:12px 0; border-bottom:1.5px dotted var(--ink-3); font-family:'Shippori Antique', serif"><span>color</span><span>¥7,500〜</span></div>
+              <div style="display:flex; justify-content:space-between; padding:12px 0; border-bottom:1.5px dotted var(--ink-3); font-family:'Shippori Antique', serif"><span>perm</span><span>¥8,500〜</span></div>
+            </div>
+            <div>
+              <div style="display:flex; justify-content:space-between; padding:12px 0; border-bottom:1.5px dotted var(--ink-3); font-family:'Shippori Antique', serif"><span>treatment</span><span>¥3,800〜</span></div>
+              <div style="display:flex; justify-content:space-between; padding:12px 0; border-bottom:1.5px dotted var(--ink-3); font-family:'Shippori Antique', serif"><span>head spa</span><span>¥4,500〜</span></div>
+              <div style="display:flex; justify-content:space-between; padding:12px 0; border-bottom:1.5px dotted var(--ink-3); font-family:'Shippori Antique', serif"><span>set</span><span>¥3,300〜</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- footer / colophon -->
+        <div style="margin-top:30px; padding-top:18px; border-top:2px solid var(--ink); display:flex; justify-content:space-between; font-family:var(--hand); font-size:12px; color:var(--ink-3)">
+          <div>colophon · vol.01</div>
+          <div>reserve → tel ●●●● / web</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== WF 3 ===================== -->
+  <section class="wf wf3" id="wf3">
+    <div class="frame-meta">
+      <div class="badge">案 03</div>
+      <div>
+        <h2>Sticky Side Nav — 左固定ナビ</h2>
+        <div class="tags" style="margin-top:6px">
+          <span class="tag">左サイド固定</span>
+          <span class="tag">ヒーロー左右分割</span>
+          <span class="tag">テーブル型メニュー</span>
+          <span class="tag">情報重視</span>
+        </div>
+      </div>
+      <p class="desc">スクロールしても予約導線とナビが常に見える。情報量が多くてもユーザーが迷子にならない。リピーター集客や複数店舗展開する美容室向け。</p>
+    </div>
+
+    <div class="canvas">
+      <span class="pin"></span><span class="pin r"></span>
+      <div class="grid layout">
+
+        <!-- sticky side -->
+        <div class="side">
+          <div style="font-family:var(--hand); font-weight:700; font-size:18px; margin-bottom:18px">salon ●●</div>
+          <div style="display:flex; flex-direction:column; gap:10px; font-family:var(--hand); font-size:13px; color:var(--ink-2); margin-bottom:24px">
+            <div style="color:var(--ink); font-weight:700; border-left:2px solid var(--accent); padding-left:8px;">— concept</div>
+            <div style="padding-left:10px">— stylist</div>
+            <div style="padding-left:10px">— menu</div>
+            <div style="padding-left:10px">— gallery</div>
+            <div style="padding-left:10px">— voice</div>
+            <div style="padding-left:10px">— access</div>
+          </div>
+          <div style="border-top:1.5px dashed var(--ink); padding-top:14px; font-size:12px; font-family:var(--hand); color:var(--ink-2)">
+            <div>open 10:00 — 20:00</div>
+            <div>close · tuesday</div>
+            <div style="margin-top:10px">tel ●●●●-●●</div>
+          </div>
+          <div style="margin-top:18px; background:var(--ink); color:var(--paper); padding:10px; text-align:center; font-family:var(--hand); border-radius:4px">web予約 →</div>
+          <div class="note" style="top:6px; right:-180px; max-width:160px">
+            <span class="arrow">←</span> position: sticky<br>常時見える
+          </div>
+        </div>
+
+        <!-- main column -->
+        <div class="stack">
+
+          <!-- hero split -->
+          <div class="grid hero-split">
+            <div class="box photo">
+              <div class="ph-label">hero photo / 縦長</div>
+            </div>
+            <div class="box pad-l" style="padding:36px; display:flex; flex-direction:column; justify-content:center">
+              <div class="eyebrow">salon ●●</div>
+              <div class="heading" style="font-size:28px; margin:10px 0 18px; line-height:1.4">髪と暮らす、<br>ちいさな時間。</div>
+              <div class="text-block tight" style="max-width:80%">
+                <div class="ln w90"></div><div class="ln w80"></div>
+                <div class="ln w90"></div><div class="ln w50"></div>
+              </div>
+              <div style="margin-top:24px; display:flex; gap:10px">
+                <div style="border:2px solid var(--ink); padding:8px 18px; font-family:var(--hand); border-radius:24px">about us →</div>
+                <div style="background:var(--ink); color:var(--paper); padding:8px 18px; font-family:var(--hand); border-radius:24px">予約 →</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- concept -->
+          <div>
+            <div class="seclabel">concept</div>
+            <div class="grid" style="grid-template-columns:1fr 1fr 1fr; gap:18px">
+              <div class="box pad" style="padding:18px">
+                <div style="font-family:'Josefin Sans'; font-size:11px; letter-spacing:0.2em">01</div>
+                <div class="heading" style="font-size:16px; margin:6px 0">髪を大切にする</div>
+                <div class="text-block tight"><div class="ln w90 thin"></div><div class="ln w80 thin"></div><div class="ln w50 thin"></div></div>
+              </div>
+              <div class="box pad" style="padding:18px">
+                <div style="font-family:'Josefin Sans'; font-size:11px; letter-spacing:0.2em">02</div>
+                <div class="heading" style="font-size:16px; margin:6px 0">時間を慈しむ</div>
+                <div class="text-block tight"><div class="ln w90 thin"></div><div class="ln w80 thin"></div><div class="ln w50 thin"></div></div>
+              </div>
+              <div class="box pad" style="padding:18px">
+                <div style="font-family:'Josefin Sans'; font-size:11px; letter-spacing:0.2em">03</div>
+                <div class="heading" style="font-size:16px; margin:6px 0">日常に還る</div>
+                <div class="text-block tight"><div class="ln w90 thin"></div><div class="ln w80 thin"></div><div class="ln w50 thin"></div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- menu table -->
+          <div style="position:relative">
+            <div class="seclabel">menu</div>
+            <div class="box pad" style="padding:18px 22px">
+              <div class="menu-table">
+                <div class="menu-row">
+                  <div style="font-family:'Josefin Sans'; font-size:11px; letter-spacing:0.15em; color:var(--ink-3)">01</div>
+                  <div><div style="font-family:var(--hand); font-size:16px">cut</div><div style="font-size:12px; color:var(--ink-3); font-family:var(--hand)">カット・シャンプー・ブロー</div></div>
+                  <div style="font-family:var(--hand); text-align:right">¥5,500〜</div>
+                </div>
+                <div class="menu-row">
+                  <div style="font-family:'Josefin Sans'; font-size:11px; letter-spacing:0.15em; color:var(--ink-3)">02</div>
+                  <div><div style="font-family:var(--hand); font-size:16px">color</div><div style="font-size:12px; color:var(--ink-3); font-family:var(--hand)">トレンドカラー / グレイカラー</div></div>
+                  <div style="font-family:var(--hand); text-align:right">¥7,500〜</div>
+                </div>
+                <div class="menu-row">
+                  <div style="font-family:'Josefin Sans'; font-size:11px; letter-spacing:0.15em; color:var(--ink-3)">03</div>
+                  <div><div style="font-family:var(--hand); font-size:16px">cut + color</div><div style="font-size:12px; color:var(--ink-3); font-family:var(--hand)">人気No.1セットメニュー</div></div>
+                  <div style="font-family:var(--hand); text-align:right">¥12,000〜</div>
+                </div>
+                <div class="menu-row">
+                  <div style="font-family:'Josefin Sans'; font-size:11px; letter-spacing:0.15em; color:var(--ink-3)">04</div>
+                  <div><div style="font-family:var(--hand); font-size:16px">treatment</div><div style="font-size:12px; color:var(--ink-3); font-family:var(--hand)">髪質改善トリートメント</div></div>
+                  <div style="font-family:var(--hand); text-align:right">¥3,800〜</div>
+                </div>
+                <div class="menu-row" style="border-bottom:none">
+                  <div style="font-family:'Josefin Sans'; font-size:11px; letter-spacing:0.15em; color:var(--ink-3)">05</div>
+                  <div><div style="font-family:var(--hand); font-size:16px">head spa</div><div style="font-size:12px; color:var(--ink-3); font-family:var(--hand)">炭酸 / アロマ選択可</div></div>
+                  <div style="font-family:var(--hand); text-align:right">¥4,500〜</div>
+                </div>
+              </div>
+            </div>
+            <div class="note green" style="right:-30px; top:30px; max-width:180px">
+              テーブル型 = <br>情報量多くても<br>整理されて見える <span class="arrow">↗</span>
+            </div>
+          </div>
+
+          <!-- gallery (smaller) -->
+          <div>
+            <div class="seclabel">gallery</div>
+            <div class="grid" style="grid-template-columns:repeat(3, 1fr); gap:10px">
+              <div class="box photo" style="aspect-ratio:3/4"><div class="ph-label">style 01</div></div>
+              <div class="box photo" style="aspect-ratio:3/4"><div class="ph-label">style 02</div></div>
+              <div class="box photo" style="aspect-ratio:3/4"><div class="ph-label">style 03</div></div>
+            </div>
+            <div style="text-align:right; margin-top:8px; font-family:var(--hand); font-size:13px; color:var(--ink-2); text-decoration:underline; text-underline-offset:3px">view all →</div>
+          </div>
+
+          <!-- voice -->
+          <div>
+            <div class="seclabel">voice</div>
+            <div class="grid" style="grid-template-columns:1fr 1fr; gap:14px">
+              <div class="box pad" style="padding:18px; background:var(--paper-deep)">
+                <div style="font-size:24px; font-family:'Josefin Sans'; line-height:1; color:var(--accent)">"</div>
+                <div class="text-block tight" style="margin-top:4px"><div class="ln w90 thin"></div><div class="ln w80 thin"></div><div class="ln w70 thin"></div><div class="ln w50 thin"></div></div>
+                <div style="font-family:var(--hand); font-size:12px; color:var(--ink-3); margin-top:10px">— ●●様 / 30代</div>
+              </div>
+              <div class="box pad" style="padding:18px; background:var(--paper-deep)">
+                <div style="font-size:24px; font-family:'Josefin Sans'; line-height:1; color:var(--accent)">"</div>
+                <div class="text-block tight" style="margin-top:4px"><div class="ln w90 thin"></div><div class="ln w80 thin"></div><div class="ln w60 thin"></div></div>
+                <div style="font-family:var(--hand); font-size:12px; color:var(--ink-3); margin-top:10px">— ●●様 / 40代</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- access -->
+          <div>
+            <div class="seclabel">access</div>
+            <div class="grid" style="grid-template-columns:1fr 1fr; gap:14px">
+              <div class="box hatch-soft" style="height:200px">
+                <div class="lbl">map</div>
+              </div>
+              <div class="pad" style="padding:18px">
+                <div class="text-block tight">
+                  <div class="ln w70"></div>
+                  <div class="ln w90"></div>
+                  <div class="ln w60"></div>
+                  <div class="ln w80"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== WF 4 ===================== -->
+  <section class="wf wf4" id="wf4">
+    <div class="frame-meta">
+      <div class="badge">案 04</div>
+      <div>
+        <h2>Horizontal Scroll — 横スクロールハイブリッド</h2>
+        <div class="tags" style="margin-top:6px">
+          <span class="tag">攻めの構成</span>
+          <span class="tag">スタイリスト横送り</span>
+          <span class="tag">ギャラリー横スクロール</span>
+          <span class="tag">記憶に残る</span>
+        </div>
+      </div>
+      <p class="desc">縦スクロール基調 + 部分的に横スクロール。「らふる」のいいとこ取り。情報の塊にリズムが生まれる。20-30代向け、雑誌的に「めくる」体験を作りたい店舗向け。</p>
+    </div>
+
+    <div class="canvas">
+      <span class="pin"></span><span class="pin r"></span>
+      <div class="stack">
+
+        <!-- nav -->
+        <div class="wf-nav">
+          <div class="logo">●● salon</div>
+          <div class="nav-items"><span>concept</span><span>stylist</span><span>menu</span><span>gallery</span></div>
+          <div class="nav-cta">予約 →</div>
+        </div>
+
+        <!-- hero with oversized type -->
+        <div style="position:relative; padding:30px 0; border-bottom:2px solid var(--ink)">
+          <div style="font-family:'Josefin Sans'; font-weight:100; font-size:clamp(60px, 12vw, 140px); letter-spacing:-0.04em; line-height:0.92; color:var(--ink); margin:0">
+            slow,<br>warm,<br>everyday.
+          </div>
+          <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-top:18px">
+            <div class="text-block tight" style="max-width:280px">
+              <div class="ln w90"></div><div class="ln w80"></div><div class="ln w60"></div>
+            </div>
+            <div class="box photo" style="width:240px; height:160px"><div class="ph-label">hero / 横長</div></div>
+          </div>
+          <div class="note" style="top:30px; right:30px">
+            <span class="arrow">↘</span> vw単位の<br>巨大タイポ
+          </div>
+        </div>
+
+        <!-- concept -->
+        <div style="padding-top:14px">
+          <div class="seclabel">concept</div>
+          <div class="grid" style="grid-template-columns:0.4fr 1fr; gap:30px">
+            <div>
+              <div style="font-family:'Josefin Sans'; font-weight:100; font-size:46px; line-height:1">01.</div>
+              <div class="eyebrow" style="margin-top:6px">about</div>
+            </div>
+            <div class="text-block">
+              <div class="ln w90"></div><div class="ln w90"></div><div class="ln w80"></div>
+              <div class="ln w90"></div><div class="ln w70"></div><div class="ln w50"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- horizontal stylist scroll -->
+        <div style="margin-top:14px; position:relative">
+          <div class="seclabel">stylist</div>
+          <div class="scroll-hint">→ 横にスワイプ / drag</div>
+          <div class="stylist-h" style="overflow:visible; padding:8px 0 16px;">
+            <div class="scard">
+              <div class="box photo" style="height:280px"><div class="ph-label">stylist 01</div></div>
+              <div style="margin-top:10px"><div class="heading" style="font-size:15px">田辺 ゆき</div><div style="font-family:var(--hand); font-size:12px; color:var(--ink-3)">director</div></div>
+            </div>
+            <div class="scard">
+              <div class="box photo" style="height:280px"><div class="ph-label">stylist 02</div></div>
+              <div style="margin-top:10px"><div class="heading" style="font-size:15px">●●</div><div style="font-family:var(--hand); font-size:12px; color:var(--ink-3)">stylist</div></div>
+            </div>
+            <div class="scard">
+              <div class="box photo" style="height:280px"><div class="ph-label">stylist 03</div></div>
+              <div style="margin-top:10px"><div class="heading" style="font-size:15px">●●</div><div style="font-family:var(--hand); font-size:12px; color:var(--ink-3)">stylist</div></div>
+            </div>
+            <div class="scard">
+              <div class="box photo" style="height:280px"><div class="ph-label">stylist 04</div></div>
+              <div style="margin-top:10px"><div class="heading" style="font-size:15px">●●</div><div style="font-family:var(--hand); font-size:12px; color:var(--ink-3)">stylist</div></div>
+            </div>
+            <div class="scard" style="display:flex; align-items:center; justify-content:center; padding:0 30px">
+              <div style="font-family:var(--hand); font-size:14px; color:var(--accent); text-align:center">view<br>all →</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- horizontal gallery scroll with snap -->
+        <div style="margin-top:14px">
+          <div class="seclabel">gallery</div>
+          <div class="scroll-hint">→ scroll-snap でカチッと止まる</div>
+          <div class="h-scroll">
+            <div class="card box photo" style="height:280px"><div class="ph-label">style 01</div></div>
+            <div class="card box photo" style="height:280px"><div class="ph-label">style 02</div></div>
+            <div class="card box photo" style="height:280px"><div class="ph-label">style 03</div></div>
+            <div class="card box photo" style="height:280px"><div class="ph-label">style 04</div></div>
+            <div class="card box photo" style="height:280px"><div class="ph-label">style 05</div></div>
+            <div class="card box photo" style="height:280px"><div class="ph-label">style 06</div></div>
+          </div>
+        </div>
+
+        <!-- menu (vertical) -->
+        <div style="margin-top:14px">
+          <div class="seclabel">menu</div>
+          <div class="grid" style="grid-template-columns:1fr 1fr">
+            <div>
+              <div style="display:flex; justify-content:space-between; padding:18px 0; border-bottom:1.5px solid var(--ink)">
+                <div><div class="heading" style="font-size:20px">cut</div><div style="font-family:var(--hand); font-size:12px; color:var(--ink-3)">カット・シャンプー</div></div>
+                <div style="font-family:'Josefin Sans'; font-size:22px; font-weight:300">¥5,500〜</div>
+              </div>
+              <div style="display:flex; justify-content:space-between; padding:18px 0; border-bottom:1.5px solid var(--ink)">
+                <div><div class="heading" style="font-size:20px">color</div><div style="font-family:var(--hand); font-size:12px; color:var(--ink-3)">トレンド・グレイ</div></div>
+                <div style="font-family:'Josefin Sans'; font-size:22px; font-weight:300">¥7,500〜</div>
+              </div>
+              <div style="display:flex; justify-content:space-between; padding:18px 0; border-bottom:1.5px solid var(--ink)">
+                <div><div class="heading" style="font-size:20px">treatment</div><div style="font-family:var(--hand); font-size:12px; color:var(--ink-3)">髪質改善</div></div>
+                <div style="font-family:'Josefin Sans'; font-size:22px; font-weight:300">¥3,800〜</div>
+              </div>
+            </div>
+            <div class="box photo" style="height:auto; min-height:240px"><div class="ph-label">menu image</div></div>
+          </div>
+        </div>
+
+        <!-- access + cta combined -->
+        <div class="grid" style="grid-template-columns:1fr 1fr; margin-top:14px; gap:14px">
+          <div class="box hatch-soft" style="height:260px"><div class="lbl">map</div></div>
+          <div class="box dark" style="padding:24px; display:flex; flex-direction:column; justify-content:center">
+            <div class="eyebrow" style="color:var(--paper); opacity:.6">reservation</div>
+            <div class="heading" style="color:var(--paper); font-size:24px; margin:8px 0 14px">ご予約はこちらから</div>
+            <div style="background:var(--paper); color:var(--ink); padding:10px 22px; font-family:var(--hand); border-radius:30px; text-align:center; margin-bottom:8px">web予約 →</div>
+            <div style="font-family:var(--hand); color:var(--paper); font-size:13px; opacity:.7; text-align:center">tel ●●●●-●●</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== WF 5 ===================== -->
+  <section class="wf wf5" id="wf5">
+    <div class="frame-meta">
+      <div class="badge">案 05</div>
+      <div>
+        <h2>Asymmetric Grid — 不揃いグリッド</h2>
+        <div class="tags" style="margin-top:6px">
+          <span class="tag">大小不揃い</span>
+          <span class="tag">余白で呼吸</span>
+          <span class="tag">写真リッチ</span>
+          <span class="tag">visualで魅せる</span>
+        </div>
+      </div>
+      <p class="desc">写真の「重み」に強弱をつけて、画面にリズムを作る。フォトジェニックな店内・スタイル写真が豊富にある店舗向け。インテリア自慢のサロンに最適。</p>
+    </div>
+
+    <div class="canvas">
+      <span class="pin"></span><span class="pin r"></span>
+      <div class="stack">
+
+        <div class="wf-nav">
+          <div class="logo">salon ●●</div>
+          <div class="nav-items"><span>concept</span><span>menu</span><span>stylist</span><span>gallery</span><span>access</span></div>
+          <div class="nav-cta">reserve →</div>
+        </div>
+
+        <!-- asymmetric hero -->
+        <div style="position:relative">
+          <div class="asym-hero">
+            <div class="box photo" style="height:auto"><div class="ph-label">hero / 大 portrait</div></div>
+            <div class="box photo" style="height:auto"><div class="ph-label">小 / 横長</div></div>
+            <div class="box pad-l" style="padding:22px; display:flex; flex-direction:column; justify-content:flex-end">
+              <div class="eyebrow">salon ●●</div>
+              <div class="heading" style="font-size:22px; margin-top:6px">髪と暮らす、<br>ちいさな時間。</div>
+            </div>
+          </div>
+          <div class="note" style="right:-10px; top:-8px">
+            写真3枚+テキストで<br>「組写真」風 <span class="arrow">↘</span>
+          </div>
+        </div>
+
+        <!-- concept -->
+        <div>
+          <div class="seclabel">concept</div>
+          <div class="grid" style="grid-template-columns:1fr 1.6fr; gap:24px; align-items:end">
+            <div class="box photo" style="height:280px"><div class="ph-label">interior</div></div>
+            <div style="padding:0 0 14px">
+              <div class="heading" style="font-size:24px; margin-bottom:14px">日々を、整える。</div>
+              <div class="text-block">
+                <div class="ln w90"></div><div class="ln w80"></div>
+                <div class="ln w90"></div><div class="ln w70"></div>
+                <div class="ln w50"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- asymmetric gallery -->
+        <div>
+          <div class="seclabel">gallery</div>
+          <div class="asym-gallery">
+            <div class="box photo"><div class="ph-label">大 / 主役</div></div>
+            <div class="box photo"><div class="ph-label">style 02</div></div>
+            <div class="box photo"><div class="ph-label">縦長</div></div>
+            <div class="box photo"><div class="ph-label">style 04</div></div>
+            <div class="box photo"><div class="ph-label">小</div></div>
+            <div class="box photo"><div class="ph-label">小</div></div>
+            <div class="box photo"><div class="ph-label">小</div></div>
+          </div>
+        </div>
+
+        <!-- stylist 3-up unequal -->
+        <div>
+          <div class="seclabel">stylist</div>
+          <div class="grid asym-stylist">
+            <div>
+              <div class="box photo" style="height:280px; margin-top:30px"><div class="ph-label">stylist 02</div></div>
+              <div style="margin-top:10px"><div class="heading" style="font-size:15px">●●</div><div style="font-family:var(--hand); font-size:12px; color:var(--ink-3)">stylist</div></div>
+            </div>
+            <div>
+              <div class="box photo" style="height:340px"><div class="ph-label">director / 大</div></div>
+              <div style="margin-top:10px"><div class="heading" style="font-size:17px">田辺 ゆき</div><div style="font-family:var(--hand); font-size:12px; color:var(--ink-3)">director · 12 years</div></div>
+            </div>
+            <div>
+              <div class="box photo" style="height:280px; margin-top:50px"><div class="ph-label">stylist 03</div></div>
+              <div style="margin-top:10px"><div class="heading" style="font-size:15px">●●</div><div style="font-family:var(--hand); font-size:12px; color:var(--ink-3)">stylist</div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- menu compact -->
+        <div>
+          <div class="seclabel">menu</div>
+          <div class="box pad" style="padding:24px 30px; background:var(--paper-deep)">
+            <div class="grid" style="grid-template-columns:1fr 1fr; gap:0 50px">
+              <div>
+                <div style="display:flex; justify-content:space-between; padding:10px 0; border-bottom:1.5px dotted var(--ink-3); font-family:var(--hand)"><span>cut</span><span>¥5,500〜</span></div>
+                <div style="display:flex; justify-content:space-between; padding:10px 0; border-bottom:1.5px dotted var(--ink-3); font-family:var(--hand)"><span>cut + color</span><span>¥12,000〜</span></div>
+                <div style="display:flex; justify-content:space-between; padding:10px 0; font-family:var(--hand)"><span>perm</span><span>¥8,500〜</span></div>
+              </div>
+              <div>
+                <div style="display:flex; justify-content:space-between; padding:10px 0; border-bottom:1.5px dotted var(--ink-3); font-family:var(--hand)"><span>treatment</span><span>¥3,800〜</span></div>
+                <div style="display:flex; justify-content:space-between; padding:10px 0; border-bottom:1.5px dotted var(--ink-3); font-family:var(--hand)"><span>head spa</span><span>¥4,500〜</span></div>
+                <div style="display:flex; justify-content:space-between; padding:10px 0; font-family:var(--hand)"><span>set</span><span>¥3,300〜</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- access + cta side -->
+        <div class="grid" style="grid-template-columns:1.4fr 1fr; gap:14px">
+          <div class="box hatch-soft" style="height:240px"><div class="lbl">map</div></div>
+          <div class="box dark" style="padding:24px; display:flex; flex-direction:column; justify-content:center">
+            <div class="eyebrow" style="color:var(--paper); opacity:.6">reservation</div>
+            <div class="heading" style="color:var(--paper); font-size:22px; margin:8px 0 14px">ご予約</div>
+            <div style="background:var(--paper); color:var(--ink); padding:10px 22px; font-family:var(--hand); border-radius:30px; text-align:center">web予約 →</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== WF 6 — mix of 03 + 04 ===================== -->
+  <section class="wf wf6" id="wf6">
+    <div class="frame-meta">
+      <div class="badge">案 06</div>
+      <div>
+        <h2>Side Nav × Horizontal Scroll — 03 × 04 ミックス</h2>
+        <div class="tags" style="margin-top:6px">
+          <span class="tag">左サイド固定</span>
+          <span class="tag">スタイリスト横送り</span>
+          <span class="tag">ギャラリー横スクロール</span>
+          <span class="tag">予約常時表示</span>
+        </div>
+      </div>
+      <p class="desc">03の「左固定ナビ＋予約導線」の安心感に、04の「横スクロールで魅せる」リズムを合体。情報量と回遊性を両立。スタイリスト・ギャラリーは横送り、メニューは縦テーブルで読みやすさを確保。</p>
+    </div>
+
+    <div class="canvas">
+      <span class="pin"></span><span class="pin r"></span>
+      <div class="grid layout">
+
+        <!-- sticky side (from wf3) -->
+        <div class="side">
+          <div style="font-family:var(--hand); font-weight:700; font-size:18px; margin-bottom:18px">salon ●●</div>
+          <div style="display:flex; flex-direction:column; gap:10px; font-family:var(--hand); font-size:13px; color:var(--ink-2); margin-bottom:24px">
+            <div style="color:var(--ink); font-weight:700; border-left:2px solid var(--accent); padding-left:8px;">— concept</div>
+            <div style="padding-left:10px">— stylist</div>
+            <div style="padding-left:10px">— menu</div>
+            <div style="padding-left:10px">— gallery</div>
+            <div style="padding-left:10px">— voice</div>
+            <div style="padding-left:10px">— access</div>
+          </div>
+          <div style="border-top:1.5px dashed var(--ink); padding-top:14px; font-size:12px; font-family:var(--hand); color:var(--ink-2)">
+            <div>open 10:00 — 20:00</div>
+            <div>close · tuesday</div>
+            <div style="margin-top:10px">tel ●●●●-●●</div>
+          </div>
+          <div style="margin-top:18px; background:var(--ink); color:var(--paper); padding:10px; text-align:center; font-family:var(--hand); border-radius:4px">web予約 →</div>
+          <div class="note" style="top:6px; right:-180px; max-width:160px">
+            <span class="arrow">←</span> sticky<br>常時見える
+          </div>
+        </div>
+
+        <!-- main column -->
+        <div class="stack">
+
+          <!-- hero with oversized type (from wf4) -->
+          <div style="position:relative; padding:20px 0 30px; border-bottom:2px solid var(--ink); overflow:hidden">
+            <div style="font-family:'Josefin Sans'; font-weight:100; font-size:clamp(40px, 6.5vw, 88px); letter-spacing:-0.04em; line-height:0.92; color:var(--ink); margin:0">
+              slow,<br>warm,<br>everyday.
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-top:18px; gap:18px; flex-wrap:wrap">
+              <div class="text-block tight" style="max-width:300px; flex:1 1 200px; min-width:0">
+                <div class="ln w90"></div><div class="ln w80"></div><div class="ln w60"></div>
+              </div>
+              <div class="box photo" style="width:200px; height:140px; flex:0 0 200px"><div class="ph-label">hero / 横長</div></div>
+            </div>
+            <div class="note" style="top:18px; right:18px">
+              <span class="arrow">↘</span> 04の<br>巨大タイポ
+            </div>
+          </div>
+
+          <!-- concept compact -->
+          <div>
+            <div class="seclabel">concept</div>
+            <div class="grid" style="grid-template-columns:1fr 1fr 1fr; gap:14px">
+              <div class="box pad" style="padding:16px">
+                <div style="font-family:'Josefin Sans'; font-size:11px; letter-spacing:0.2em">01</div>
+                <div class="heading" style="font-size:15px; margin:6px 0">髪を大切にする</div>
+                <div class="text-block tight"><div class="ln w90 thin"></div><div class="ln w80 thin"></div><div class="ln w50 thin"></div></div>
+              </div>
+              <div class="box pad" style="padding:16px">
+                <div style="font-family:'Josefin Sans'; font-size:11px; letter-spacing:0.2em">02</div>
+                <div class="heading" style="font-size:15px; margin:6px 0">時間を慈しむ</div>
+                <div class="text-block tight"><div class="ln w90 thin"></div><div class="ln w80 thin"></div><div class="ln w50 thin"></div></div>
+              </div>
+              <div class="box pad" style="padding:16px">
+                <div style="font-family:'Josefin Sans'; font-size:11px; letter-spacing:0.2em">03</div>
+                <div class="heading" style="font-size:15px; margin:6px 0">日常に還る</div>
+                <div class="text-block tight"><div class="ln w90 thin"></div><div class="ln w80 thin"></div><div class="ln w50 thin"></div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- stylist horizontal (from wf4) -->
+          <div style="position:relative">
+            <div class="seclabel">stylist</div>
+            <div class="scroll-hint">→ 横にスワイプ / drag</div>
+            <div class="h-scroll">
+              <div class="card">
+                <div class="box photo" style="height:240px"><div class="ph-label">stylist 01</div></div>
+                <div style="margin-top:8px"><div class="heading" style="font-size:14px">田辺 ゆき</div><div style="font-family:var(--hand); font-size:12px; color:var(--ink-3)">director</div></div>
+              </div>
+              <div class="card">
+                <div class="box photo" style="height:240px"><div class="ph-label">stylist 02</div></div>
+                <div style="margin-top:8px"><div class="heading" style="font-size:14px">●●</div><div style="font-family:var(--hand); font-size:12px; color:var(--ink-3)">stylist</div></div>
+              </div>
+              <div class="card">
+                <div class="box photo" style="height:240px"><div class="ph-label">stylist 03</div></div>
+                <div style="margin-top:8px"><div class="heading" style="font-size:14px">●●</div><div style="font-family:var(--hand); font-size:12px; color:var(--ink-3)">stylist</div></div>
+              </div>
+              <div class="card">
+                <div class="box photo" style="height:240px"><div class="ph-label">stylist 04</div></div>
+                <div style="margin-top:8px"><div class="heading" style="font-size:14px">●●</div><div style="font-family:var(--hand); font-size:12px; color:var(--ink-3)">stylist</div></div>
+              </div>
+              <div class="card" style="display:flex; align-items:center; justify-content:center;">
+                <div style="font-family:var(--hand); font-size:14px; color:var(--accent); text-align:center">view<br>all →</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- menu table (from wf3) -->
+          <div style="position:relative">
+            <div class="seclabel">menu</div>
+            <div class="box pad" style="padding:14px 22px">
+              <div class="menu-table" style="display:flex; flex-direction:column">
+                <div style="display:grid; grid-template-columns:28px 1fr 80px; gap:14px; padding:12px 6px; border-bottom:1.5px solid var(--line-soft); align-items:center">
+                  <div style="font-family:'Josefin Sans'; font-size:11px; letter-spacing:0.15em; color:var(--ink-3)">01</div>
+                  <div><div style="font-family:var(--hand); font-size:15px">cut</div><div style="font-size:12px; color:var(--ink-3); font-family:var(--hand)">カット・シャンプー・ブロー</div></div>
+                  <div style="font-family:var(--hand); text-align:right">¥5,500〜</div>
+                </div>
+                <div style="display:grid; grid-template-columns:28px 1fr 80px; gap:14px; padding:12px 6px; border-bottom:1.5px solid var(--line-soft); align-items:center">
+                  <div style="font-family:'Josefin Sans'; font-size:11px; letter-spacing:0.15em; color:var(--ink-3)">02</div>
+                  <div><div style="font-family:var(--hand); font-size:15px">cut + color</div><div style="font-size:12px; color:var(--ink-3); font-family:var(--hand)">人気No.1セットメニュー</div></div>
+                  <div style="font-family:var(--hand); text-align:right">¥12,000〜</div>
+                </div>
+                <div style="display:grid; grid-template-columns:28px 1fr 80px; gap:14px; padding:12px 6px; border-bottom:1.5px solid var(--line-soft); align-items:center">
+                  <div style="font-family:'Josefin Sans'; font-size:11px; letter-spacing:0.15em; color:var(--ink-3)">03</div>
+                  <div><div style="font-family:var(--hand); font-size:15px">treatment</div><div style="font-size:12px; color:var(--ink-3); font-family:var(--hand)">髪質改善トリートメント</div></div>
+                  <div style="font-family:var(--hand); text-align:right">¥3,800〜</div>
+                </div>
+                <div style="display:grid; grid-template-columns:28px 1fr 80px; gap:14px; padding:12px 6px; align-items:center">
+                  <div style="font-family:'Josefin Sans'; font-size:11px; letter-spacing:0.15em; color:var(--ink-3)">04</div>
+                  <div><div style="font-family:var(--hand); font-size:15px">head spa</div><div style="font-size:12px; color:var(--ink-3); font-family:var(--hand)">炭酸 / アロマ選択可</div></div>
+                  <div style="font-family:var(--hand); text-align:right">¥4,500〜</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- gallery horizontal scroll (from wf4) -->
+          <div>
+            <div class="seclabel">gallery</div>
+            <div class="scroll-hint">→ scroll-snap でカチッと止まる</div>
+            <div class="h-scroll">
+              <div class="card box photo" style="height:260px"><div class="ph-label">style 01</div></div>
+              <div class="card box photo" style="height:260px"><div class="ph-label">style 02</div></div>
+              <div class="card box photo" style="height:260px"><div class="ph-label">style 03</div></div>
+              <div class="card box photo" style="height:260px"><div class="ph-label">style 04</div></div>
+              <div class="card box photo" style="height:260px"><div class="ph-label">style 05</div></div>
+              <div class="card box photo" style="height:260px"><div class="ph-label">style 06</div></div>
+            </div>
+          </div>
+
+          <!-- voice + access combined -->
+          <div class="grid" style="grid-template-columns:1fr 1fr; gap:14px">
+            <div>
+              <div class="seclabel">voice</div>
+              <div class="box pad" style="padding:16px; background:var(--paper-deep)">
+                <div style="font-size:24px; font-family:'Josefin Sans'; line-height:1; color:var(--accent)">"</div>
+                <div class="text-block tight" style="margin-top:4px"><div class="ln w90 thin"></div><div class="ln w80 thin"></div><div class="ln w60 thin"></div></div>
+                <div style="font-family:var(--hand); font-size:12px; color:var(--ink-3); margin-top:8px">— ●●様 / 30代</div>
+              </div>
+            </div>
+            <div>
+              <div class="seclabel">access</div>
+              <div class="box hatch-soft" style="height:160px"><div class="lbl">map</div></div>
+              <div class="text-block tight" style="margin-top:8px"><div class="ln w70 thin"></div><div class="ln w90 thin"></div><div class="ln w50 thin"></div></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- legend -->
+  <div class="legend">
+    <div class="li"><div class="swatch photo"></div>写真プレースホルダ</div>
+    <div class="li"><div class="swatch text"></div>本文テキストブロック</div>
+    <div class="li"><div class="swatch hatch"></div>地図・装飾エリア</div>
+    <div class="li"><div class="swatch cta"></div>CTA / アクセント</div>
+    <div class="li" style="margin-left:auto; color:var(--ink-3)">右下の <b style="color:var(--accent)">Tweaks</b> で案・粒度・配色を切替できます</div>
+  </div>
+</div>
+
+<!-- React + tweaks panel -->
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+
+<script>
+  // Plain JS tab logic (works regardless of React mounting)
+  (function () {
+    function setActive(target) {
+      var tabs = document.querySelectorAll('#tabs .tab');
+      var minis = document.querySelectorAll('#overview .mini');
+      var wfs = document.querySelectorAll('.wf');
+      tabs.forEach(function (t) { t.classList.toggle('is-active', t.dataset.target === target); });
+      minis.forEach(function (m) { m.classList.toggle('is-active', m.dataset.target === target); });
+      wfs.forEach(function (w) { w.classList.toggle('is-active', w.id === target); });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    document.querySelectorAll('#tabs .tab').forEach(function (t) {
+      t.addEventListener('click', function () { setActive(t.dataset.target); });
+    });
+    document.querySelectorAll('#overview .mini').forEach(function (m) {
+      m.addEventListener('click', function () { setActive(m.dataset.target); });
+    });
+    window.__setActiveWf = setActive;
+  })();
+</script>
+
+<script type="text/babel">
+  const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+    "wireframe": "wf6",
+    "fidelity": "lofi",
+    "palette": "warm"
+  }/*EDITMODE-END*/;
+
+  function App() {
+    const [values, setTweak] = useTweaks(TWEAK_DEFAULTS);
+
+    React.useEffect(() => {
+      if (window.__setActiveWf && values.wireframe) window.__setActiveWf(values.wireframe);
+    }, [values.wireframe]);
+
+    React.useEffect(() => {
+      if (!values.fidelity) return;
+      document.body.classList.remove('lofi', 'midfi');
+      document.body.classList.add(values.fidelity);
+    }, [values.fidelity]);
+
+    React.useEffect(() => {
+      if (!values.palette) return;
+      document.body.classList.remove('palette-warm', 'palette-sage', 'palette-stone');
+      document.body.classList.add('palette-' + values.palette);
+    }, [values.palette]);
+
+    return (
+      <TweaksPanel title="Tweaks">
+        <TweakSection label="ワイヤーフレーム" />
+        <TweakRadio
+          label="案"
+          value={values.wireframe}
+          onChange={(v) => setTweak('wireframe', v)}
+          options={[
+            { value: 'wf1', label: '01 Classic' },
+            { value: 'wf2', label: '02 Magazine' },
+            { value: 'wf3', label: '03 Sticky Side' },
+            { value: 'wf4', label: '04 H-Scroll' },
+            { value: 'wf5', label: '05 Asymmetric' },
+            { value: 'wf6', label: '06 Side × H-Scroll (mix)' },
+          ]}
+        />
+        <TweakSection label="粒度 fidelity" />
+        <TweakRadio
+          label="fidelity"
+          value={values.fidelity}
+          onChange={(v) => setTweak('fidelity', v)}
+          options={[
+            { value: 'lofi', label: 'ラフ' },
+            { value: 'midfi', label: '中粒度' },
+          ]}
+        />
+        <TweakSection label="アクセント配色" />
+        <TweakRadio
+          label="palette"
+          value={values.palette}
+          onChange={(v) => setTweak('palette', v)}
+          options={[
+            { value: 'warm', label: 'テラコッタ' },
+            { value: 'sage', label: 'セージ' },
+            { value: 'stone', label: 'ストーン' },
+          ]}
+        />
+      </TweaksPanel>
+    );
+  }
+
+  // Mount when DOM ready
+  function mount() {
+    const root = document.createElement('div');
+    document.body.appendChild(root);
+    ReactDOM.createRoot(root).render(<App />);
+    // Ensure default classes applied
+    document.body.classList.add(TWEAK_DEFAULTS.fidelity);
+    document.body.classList.add('palette-' + TWEAK_DEFAULTS.palette);
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', mount);
+  } else {
+    mount();
+  }
+</script>
+
+</body>
+</html>
